@@ -20,7 +20,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 })
 export class SignInComponent implements OnInit {
   form!: FormGroup;
-  submitted = false;
+  submitted : boolean = false;
   passwordTextType!: boolean;
 
   constructor(private readonly _formBuilder: FormBuilder, private readonly _router: Router) {}
@@ -32,7 +32,7 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  get f() {
+  get formControls() {
     return this.form.controls;
   }
 
