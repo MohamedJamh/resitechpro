@@ -36,8 +36,8 @@
         </label>
       </div>
       <div *ngIf="submitted && formControls['email'].errors" class="is__invalid-error">
-        <div *ngIf="formControls['email'].errors['required']">Required field</div>
-        <div *ngIf="formControls['email'].errors['email']">Email must be an email address valid</div>
+        <div *ngIf="formControls['email'].errors?.['required']">Required field</div>
+        <div *ngIf="formControls['email'].errors?.['email']">Email must be an email address valid</div>
       </div>
     </div>
 
