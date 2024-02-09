@@ -60,9 +60,8 @@ export class SignInComponent implements OnInit {
     } as User;
     this.authService.signin(user).subscribe((response : HttpResponse<Response<Auth>>) => {
       if( [200,201].includes(response.status) && response.body?.result){
-        console.log(response.body?.result);
-        localStorage.setItem('resitechprotoken', response.body?.result.accessToken!);
-        this._router.navigate(['/']);
+        alert('Login successful');
+        this._router.navigate(['/dashboard']);
       }else {
         alert(response.body?.message);
       }
