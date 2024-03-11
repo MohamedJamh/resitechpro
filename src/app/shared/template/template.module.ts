@@ -23,6 +23,7 @@ import { FooterComponent } from "./footer/footer.component";
 import { SideNavDirective } from "../directives/side-nav.directive";
 import { ThemeConstantService } from '../services/theme-constant.service';
 
+
 const antdModule = [
     NzAvatarModule,
     NzBadgeModule,
@@ -33,7 +34,7 @@ const antdModule = [
     NzDividerModule,
     NzSwitchModule,
     NzInputModule,
-    NzButtonModule
+    NzButtonModule,
 ]
 
 @NgModule({

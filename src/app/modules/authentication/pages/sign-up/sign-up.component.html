@@ -6,7 +6,7 @@
                         <img src="../../../../../assets/images/logo/logo-white.png" alt="">
                     </div>
                     <div>
-                        <h1 class="text-white m-b-20 font-weight-normal">Exploring Enlink</h1>
+                        <h1 class="text-white m-b-20 font-weight-normal">Exploring Resitech Pro</h1>
                         <p class="text-white font-size-16 lh-2 w-80 opacity-08">Climb leg rub face on everything give attitude nap all day for under the bed. Chase mice attack feet but rub face on everything hopped up.</p>
                     </div>
                     <div class="d-flex justify-content-between">
@@ -29,16 +29,34 @@
                             <h2>Sign Up</h2>
                             <p class="m-b-30">Create your account to get access</p>
                             <form nz-form [formGroup]="signUpForm" class="login-form" nzLayout="vertical" (ngSubmit)="submitForm()">
-                                <nz-form-item>
-                                    <nz-form-label nzRequired nzFor="userName">Username</nz-form-label>
-                                    <nz-form-control nzErrorTip="Please input your username!">
-                                        <input type="text" nz-input formControlName="userName" placeholder="Username" id="userName">
-                                    </nz-form-control>
+                              <nz-form-item>
+                                <nz-form-label nzRequired nzFor="firstName">First Name</nz-form-label>
+                                <nz-form-control nzErrorTip="Please input your first name!">
+                                  <input type="text" nz-input formControlName="firstName" placeholder="First Name" id="firstName">
+                                </nz-form-control>
                                 </nz-form-item>
                                 <nz-form-item>
-                                    <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
+                                  <nz-form-label nzRequired nzFor="organizationName">Organization Name</nz-form-label>
+                                  <nz-form-control nzErrorTip="Please input your organization name!">
+                                    <input type="text" nz-input formControlName="organizationName" placeholder="Organization Name" id="organizationName">
+                                  </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                  <nz-form-label nzRequired nzFor="organizationId">Organization Id</nz-form-label>
+                                  <nz-form-control nzErrorTip="Please input your organization id!">
+                                    <input type="text" nz-input formControlName="organizationId" placeholder="Organization Name" id="organizationId">
+                                  </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                  <nz-form-label nzRequired nzFor="lastName">Last Name</nz-form-label>
+                                  <nz-form-control nzErrorTip="Please input your last name!">
+                                    <input type="text" nz-input formControlName="lastName" placeholder="Last Name" id="lastName">
+                                  </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-label nzRequired nzFor="personalEmail">Personal email</nz-form-label>
                                     <nz-form-control nzErrorTip="The input is not valid E-mail!">
-                                        <input type="text" nz-input formControlName="email" placeholder="Username" id="email">
+                                        <input type="text" nz-input formControlName="personalEmail" placeholder="Username" id="personalEmail">
                                     </nz-form-control>
                                 </nz-form-item>
                                 <nz-form-item>
@@ -64,7 +82,7 @@
                                     <nz-form-item>
                                         <nz-form-control>
                                             <div >
-                                                <button nz-button class="login-form-button" [nzType]="'primary'">Sign Up</button>
+                                                <button nz-button class="login-form-button" [nzType]="'primary'" [disabled]="disableSubmitButton()" [nzLoading]="signUpFormSubmitted" >Sign Up</button>
                                             </div>
                                         </nz-form-control>
                                     </nz-form-item>

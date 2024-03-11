@@ -73,7 +73,7 @@
     position: relative;
     margin-left: auto;
     margin-right: auto;
-  
+
     @each $breakpoint in map-keys($gutters) {
       @include media-breakpoint-up($breakpoint) {
         $gutter: map-get($gutters, $breakpoint);
@@ -82,8 +82,8 @@
       }
     }
   }
-  
-  
+
+
   // For each breakpoint, define the maximum width of the container in a media query
 @mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
     @each $breakpoint, $container-max-width in $max-widths {
@@ -197,7 +197,7 @@
     @include make-row();
     }
 
-    // Remove the negative margin from default .row, then the horizontal padding
+    // Remove the negative margin from overview .row, then the horizontal padding
     // from all immediate children columns (to prevent runaway style inheritance).
     .no-gutters {
     margin-right: 0;
@@ -218,5 +218,5 @@
 @if $enable-grid-classes {
     @include make-grid-columns();
 }
-  
-  
+
+

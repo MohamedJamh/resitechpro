@@ -9,28 +9,32 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ThemeConstantService } from './services/theme-constant.service';
 import { SearchPipe } from './pipes/search.pipe';
 import {TenantInterceptor} from "./interceptor/tenant.interceptor";
-import {Auth} from "./models/iauth.model";
+import { AlertComponent } from './components/alert/alert.component';
+import {NzAlertModule} from "ng-zorro-antd/alert";
 
 @NgModule({
-    exports: [
-        CommonModule,
-        FormsModule,
-        HttpClientModule,
-        HttpClientJsonpModule,
-        NzIconModule,
-        PerfectScrollbarModule,
-        SearchPipe,
-    ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
+    NzIconModule,
+    PerfectScrollbarModule,
+    SearchPipe,
+    AlertComponent,
+  ],
     imports: [
         RouterModule,
         CommonModule,
         NzIconModule,
         NzToolTipModule,
         PerfectScrollbarModule,
+        NzAlertModule
     ],
-    declarations: [
-        SearchPipe,
-    ],
+  declarations: [
+    SearchPipe,
+    AlertComponent,
+  ],
     providers: [
         ThemeConstantService,
         { provide : HTTP_INTERCEPTORS, useClass: TenantInterceptor, multi: true}

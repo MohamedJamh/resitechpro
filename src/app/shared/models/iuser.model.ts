@@ -8,6 +8,9 @@ export interface IUser{
   personalEmail? : string;
   password? : string;
   organizationName? : string;
+  organizationId? : string;
+  phone? : string;
+  place? : string;
   roles? : Role[];
 }
 export class User implements IUser {
@@ -18,6 +21,9 @@ export class User implements IUser {
               public personalEmail? : string,
               public password? : string,
               public organizationName? : string,
+              public organizationId? : string,
+              public phone? : string,
+              public place? : string,
               public roles? : Role[]
   ){}
 

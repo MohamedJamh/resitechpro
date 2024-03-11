@@ -57,7 +57,7 @@ $ct-bar-width: 10px !default;
 // Donut width (If donut width is to big it can cause issues where the shape gets distorted)
 $ct-donut-width: 60px !default;
 
-// If set to true it will include the default classes and generate CSS output. If you're planning to use the mixins you
+// If set to true it will include the overview classes and generate CSS output. If you're planning to use the mixins you
 // should set this property to false
 $ct-include-classes: true !default;
 
@@ -323,14 +323,14 @@ $ct-series-colors: (
         }
     }
 }
-  
+
 .ct-chart {
 
     >svg {
         min-height: 280px;
-    }     
+    }
 }
 
 .ct-label {
     fill: $white;
-}    
+}

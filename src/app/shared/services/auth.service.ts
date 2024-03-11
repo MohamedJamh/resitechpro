@@ -7,7 +7,7 @@ import {Auth} from "../models/iauth.model";
 import {User} from "../models/iuser.model";
 import {CryptoService} from "./crypto.service";
 import {Router} from "@angular/router";
-import {TenantService} from "./tenant.service";
+import {TenantResolver} from "../utils/tenant.resolver";
 
 
 @Injectable({
@@ -21,11 +21,11 @@ export class AuthService {
     private envService: EnvService,
     private cryptoService: CryptoService,
     private readonly _router: Router,
-    private tenantService: TenantService
+    private tenantService: TenantResolver
   ) {}
   signIn(userCredentials: User): Observable<HttpResponse<Response<Auth>>> {
     let httpHeaders = new HttpHeaders()
-        .set('X-tenant-id',this.tenantService.resolveFromEmail(userCredentials.email!) );
+      .set('X-tenant-id',this.tenantService.resolveFromEmail(userCredentials.email!) );
     return this.httpClient.post<Response<Auth>>(this.envService.apiUrl + this.endpointPrefix + '/sign-in', userCredentials,
       {
         observe: 'response',
@@ -52,20 +52,28 @@ export class AuthService {
   }
 
   signOut(): void {
-    localStorage.removeItem('aftasuser');
-    localStorage.removeItem('aftasacctoken');
-    localStorage.removeItem('aftasreftoken');
-    this._router.navigate(['/auth'])
-      .then(() => {
-        alert('session Timeout')
-      });
+    localStorage.removeItem('_tntid');
+    localStorage.removeItem('_resuser');
+    localStorage.removeItem('_resacctoken');
+    localStorage.removeItem('_resreftoken');
+    this._router.navigate(['/authentication/login'])
+  }
+  setCurrentUser(authUser: Auth): void {
+    const signedInUser = authUser.user!;
+    const encryptedUser : string = this.cryptoService.encrypt(JSON.stringify(signedInUser));
+    localStorage.setItem('_tntid',this.cryptoService.encrypt(this.tenantService.resolveFromEmail(signedInUser.email!)))
+    localStorage.setItem('_resuser', encryptedUser);
+    localStorage.setItem('_resacctoken', authUser.accessToken!);
+    localStorage.setItem('_resreftoken', authUser.refreshToken!);
   }
 
   isLogged(): boolean {
-    const user = localStorage.getItem('aftasuser');
-    if( user ) {
+    const user = localStorage.getItem('_resuser');
+    const tenantId = localStorage.getItem('_tntid');
+    if( user && tenantId) {
       try {
         const decryptUser : User = JSON.parse(this.cryptoService.decrypt(user)) as User;
+        const decryptedTenantId : string = JSON.parse(this.cryptoService.decrypt(tenantId)) as string;
         return true;
       }catch (e) {
         this.signOut();
@@ -73,6 +81,18 @@ export class AuthService {
       }
     }
     return false;
+  }
+
+  getAuthenticatedUser(): User {
+    const user = localStorage.getItem('_resuser');
+    if( user ) {
+      try {
+        return JSON.parse(this.cryptoService.decrypt(user)) as User;
+      }catch (e) {
+        this.signOut();
+      }
+    }
+    return {} as User;
   }
 
 }

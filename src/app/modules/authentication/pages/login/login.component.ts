@@ -6,8 +6,10 @@ import {CryptoService} from "../../../../shared/services/crypto.service";
 import {HttpResponse} from "@angular/common/http";
 import {Response} from "../../../../shared/models/response.model";
 import {Auth} from "../../../../shared/models/iauth.model";
-import {TenantService} from "../../../../shared/services/tenant.service";
+import {TenantResolver} from "../../../../shared/utils/tenant.resolver";
 import {Router} from "@angular/router";
+import {NzNotificationService} from "ng-zorro-antd/notification";
+import {Store} from "@ngrx/store";
 
 
 @Component({
@@ -22,8 +24,9 @@ export class LoginComponent implements OnInit {
       private fb: FormBuilder,
       private authService: AuthService,
       private cryptoService: CryptoService,
-      private tenantService: TenantService,
-      private _router: Router
+      private tenantService: TenantResolver,
+      private _router: Router,
+      private notification: NzNotificationService
     ) {
     }
 
@@ -47,14 +50,13 @@ export class LoginComponent implements OnInit {
           } as User;
           this.authService.signIn(user).subscribe((response : HttpResponse<Response<Auth>>) => {
             if( [200].includes(response.status) && response.body?.result){
-              alert("sign-in successful!")
-              const signedInUser = response.body?.result.user!;
-              const encryptedUser : string = this.cryptoService.encrypt(JSON.stringify(signedInUser));
-              localStorage.setItem('_tntid',this.cryptoService.encrypt(this.tenantService.resolveFromEmail(signedInUser.email!)))
-              localStorage.setItem('_resuser', encryptedUser);
-              localStorage.setItem('_resacctoken', response.body?.result.accessToken!);
-              localStorage.setItem('_resreftoken', response.body?.result.refreshToken!);
-              this._router.navigate(['/dashboard']);
+              this.notification.create(
+                'success',
+                'login success',
+                'You have successfully logged in. You will be redirected to the dashboard shortly..'
+              );
+              this.authService.setCurrentUser(response.body.result as Auth)
+              this._router.navigate(['/dashboard/home']);
             }else {
               alert(response.body?.message);
             }

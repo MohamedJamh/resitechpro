@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
+import {OverviewDashboardComponent} from "./pages/overview/overview-dashboard.component";
+import {ProfileComponent} from "./pages/profile/profile.component";
 
 const routes: Routes = [
     {
@@ -10,6 +12,22 @@ const routes: Routes = [
             title: 'Dashboard ',
             headerDisplay: 'none'
         }
+    },
+    {
+      path: 'overview',
+      component: OverviewDashboardComponent,
+      data: {
+        title: 'Overview',
+        headerDisplay: 'none'
+      }
+    },
+    {
+      path: 'profile',
+      component: ProfileComponent,
+      data: {
+        title: 'Profile',
+        headerDisplay: 'none'
+      }
     }
 ];
 

@@ -7,7 +7,7 @@ export class TableService {
     deepCopy(object: any | any[]) {
         return JSON.parse(JSON.stringify(object));
     }
-    
+
     /**
      * sort array via single
      * @param sortAttribute {key: property of the object, value: 'ascend' or 'descend'}
@@ -84,7 +84,7 @@ export class TableService {
         if (!b) b = '-';
 
         if (a === b) return 0;
-        
+
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 }
@@ -96,7 +96,7 @@ export class TableService {
 // import { NzTableService } from 'ifast-ui-ng-framework/publish';
 
 // @Component({
-//     selector: 'nz-demo-table-default-filter',
+//     selector: 'nz-demo-table-overview-filter',
 //     template: `
 //         <div class="ant-quick-search">
 //             <input nz-input placeholder="Search" id="searchText" (input)="search()">

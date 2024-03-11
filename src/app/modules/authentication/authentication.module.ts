@@ -12,13 +12,14 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 import { LoginComponent } from './pages/login/login.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import {NzNotificationModule} from "ng-zorro-antd/notification";
 
 const antdModule = [
     NzFormModule,
     NzInputModule,
     NzButtonModule,
     NzCardModule,
-    NzCheckboxModule
+    NzCheckboxModule,
 ]
 
 @NgModule({

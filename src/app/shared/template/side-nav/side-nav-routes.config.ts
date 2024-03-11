@@ -6,7 +6,24 @@ export const ROUTES: SideNavInterface[] = [
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'dashboard',
-        submenu: []
+        submenu: [
+          {
+            path: '/dashboard/overview',
+            title: 'Overview',
+            iconType: 'nzIcon',
+            icon: 'bank',
+            iconTheme: 'outline',
+            submenu: []
+          },
+          {
+            path: '/dashboard/profile',
+            title: 'Profile',
+            iconType: 'nzIcon',
+            icon: 'bank',
+            iconTheme: 'outline',
+            submenu: []
+          }
+        ]
     },
     {
         path: '',
