@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
+import {NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs} from 'ng-zorro-antd/upload';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import {Residence} from "../../../../shared/models/iresidence.model";
 import {Image} from "../../../../shared/models/iimage.model";
+import {ResidenceService} from "../../../../shared/services/core/residence.service";
+import {of} from "rxjs";
 @Component({
     templateUrl: './residences.component.html'
 })
@@ -13,8 +15,6 @@ export class ResidencesComponent {
 
     addResidenceForm: FormGroup;
     avatarUrl: string = "http://www.themenate.net/applicator/dist/assets/images/avatars/thumb-13.jpg";
-    selectedCountry: any;
-    selectedLanguage: any;
     residences : Residence[] = [
         {
             "id": "ç_èqsdf_çqèsdf_èqsdfàçqsdf",
@@ -51,7 +51,6 @@ export class ResidencesComponent {
         //     "authorImg": "assets/images/avatars/thumb-3.jpg"
         // },
     ];
-
     moroccanCities: string[] = [
         "Casablanca, Morocco",
         "Fez, Morocco",
@@ -64,126 +63,15 @@ export class ResidencesComponent {
         "Kenitra, Morocco",
         "Tetouan, Morocco"
     ];
-
-
-    networkList = [
-        {
-            name: 'Facebook',
-            icon: 'facebook',
-            avatarColor: '#4267b1',
-            avatarBg: 'rgba(66, 103, 177, 0.1)',
-            status: true,
-            link: 'https://facebook.com'
-        },
-        {
-            name: 'Instagram',
-            icon: 'instagram',
-            avatarColor: '#fff',
-            avatarBg: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)',
-            status: false,
-            link: 'https://instagram.com'
-        },
-        {
-            name: 'Twitter',
-            icon: 'twitter',
-            avatarColor: '#1ca1f2',
-            avatarBg: 'rgba(28, 161, 242, 0.1)',
-            status: true,
-            link: 'https://twitter.com'
-        },
-        {
-            name: 'Dribbble',
-            icon: 'dribbble',
-            avatarColor: '#d8487e',
-            avatarBg: 'rgba(216, 72, 126, 0.1)',
-            status: false,
-            link: 'https://dribbble.com'
-        },
-        {
-            name: 'Github',
-            icon: 'github',
-            avatarColor: '#323131',
-            avatarBg: 'rgba(50, 49, 49, 0.1)',
-            status: true,
-            link: 'https://github.com'
-        },
-        {
-            name: 'Linkedin',
-            icon: 'linkedin',
-            avatarColor: '#0174af',
-            avatarBg: 'rgba(1, 116, 175, 0.1)',
-            status: true,
-            link: 'https://linkedin.com'
-        },
-        {
-            name: 'Dropbox',
-            icon: 'dropbox',
-            avatarColor: '#005ef7',
-            avatarBg: 'rgba(0, 94, 247, 0.1)',
-            status: false,
-            link: 'https://dropbox.com'
-        }
-    ];
-
-    notificationConfigList = [
-        {
-            title: "Everyone can look me up",
-            desc: "Allow people found on your public.",
-            icon: "user",
-            color: "ant-avatar-blue",
-            status: true
-        },
-        {
-            title: "Everyone can contact me",
-            desc: "Allow any peole to contact.",
-            icon: "mobile",
-            color: "ant-avatar-cyan",
-            status: true
-        },
-        {
-            title: "Show my location",
-            desc: "Turning on Location lets you explore what's around you.",
-            icon: "environment",
-            color: "ant-avatar-gold",
-            status: false
-        },
-        {
-            title: "Email Notifications",
-            desc: "Receive daily email notifications.",
-            icon: "mail",
-            color: "ant-avatar-purple",
-            status: true
-        },
-        {
-            title: "Unknow Source ",
-            desc: "Allow all downloads from unknow source.",
-            icon: "question",
-            color: "ant-avatar-red",
-            status: false
-        },
-        {
-            title: "Data Synchronization",
-            desc: "Allow data synchronize with cloud server",
-            icon: "swap",
-            color: "ant-avatar-green",
-            status: true
-        },
-        {
-            title: "Groups Invitation",
-            desc: "Allow any groups invitation",
-            icon: "usergroup-add",
-            color: "ant-avatar-orange",
-            status: true
-        },
-    ]
+    residenceToShow: Residence;
     loadingResidences: boolean = true;
     isModalVisible: boolean = false;
-    residenceToShow: Residence;
 
     constructor(
         private fb: FormBuilder,
         private modalService: NzModalService,
-        private message: NzMessageService
+        private message: NzMessageService,
+        private residenceService: ResidenceService
     ) {
         setTimeout(() => {
             this.loadingResidences = false;
@@ -199,22 +87,27 @@ export class ResidencesComponent {
           longitude: [null, [Validators.required]],
           surface: [null, [Validators.required]],
         })
+        this.residenceService.getAllResidences().subscribe((response) => {
+          if( [200].includes(response.status) && response.body?.result){
+            this.residences = response.body.result;
+          }
+        })
     }
 
-    showConfirm(): void {
-        this.modalService.confirm({
-            nzTitle  : '<i>Do you want to change your password?</i>',
-            nzOnOk   : () => this.message.success('Password Change Successfully')
-        });
-    }
 
     submitForm(): void {
         for (const i in this.addResidenceForm.controls) {
             this.addResidenceForm.controls[ i ].markAsDirty();
             this.addResidenceForm.controls[ i ].updateValueAndValidity();
         }
+        if(this.addResidenceForm.invalid) return;
 
-        this.showConfirm();
+        this.residenceService.createResidence(this.addResidenceForm.value).subscribe((response) => {
+          if( [200,201].includes(response.status) && response.body?.result){
+            this.residences.push(response.body.result);
+          }
+        })
+
     }
 
     private getBase64(img: File, callback: (img: {}) => void): void {
@@ -223,10 +116,16 @@ export class ResidencesComponent {
         reader.readAsDataURL(img);
     }
 
-    handleChange(info: { file: NzUploadFile }): void {
-        this.getBase64(info.file.originFileObj, (img: string) => {
-            this.avatarUrl = img;
-        });
+    handleChange(event : Event): void {
+      const input = event.target as HTMLInputElement;
+        const formData = new FormData();
+        formData.append('file', input.files[0], input.files[0].name);
+        this.residenceService.uploadImage(formData, this.residenceToShow.id).subscribe((response) => {
+          if([200].includes(response.status) && response.body.result){
+            if(response.body.result == true) alert('Image uploaded successfully')
+            else alert('Image upload failed')
+          }
+        })
     }
 
     handleOk() {
@@ -238,36 +137,20 @@ export class ResidencesComponent {
         this.residenceToShow = residence;
         this.isModalVisible = true;
     }
-
     handleCancel() {
         this.isModalVisible = false;
         this.residenceToShow = null;
     }
-
     getDefaultOrFirstImage(images: Image[]): string {
         if(images.length > 0) {
             return images[0].url;
         }
         return "../../../../assets/images/others/default-residence.jpg";
     }
-
-    handleImageUpload({ file, fileList }: NzUploadChangeParam): void {
-        const status = file.status;
-        console.log(status)
-        if (status !== 'uploading') {
-            console.log(file, fileList);
-        }
-        if (status === 'done') {
-            this.message.success(`${file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            this.message.error(`${file.name} file upload failed.`);
-        }
-    }
-
     onChooseLocation(event: any) {
       this.addResidenceForm.get('latitude').setValue(event['coords'].lat);
       this.addResidenceForm.get('longitude').setValue(event['coords'].lng);
-      this.addResidenceForm.get('latitude').disable()
-      this.addResidenceForm.get('longitude').disable()
+      // this.addResidenceForm.get('latitude').disable()
+      // this.addResidenceForm.get('longitude').disable()
     }
 }

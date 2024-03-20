@@ -43,7 +43,7 @@
                         <div class="col-md-6">
                           <nz-form-item>
                             <nz-form-control nzErrorTip="Please input residence latitude!">
-                              <input [disabled]="true" formControlName="latitude" nz-input type="number" placeholder="Longitude">
+                              <input [disabled]="true" formControlName="latitude" nz-input type="number" placeholder="Latitude">
                             </nz-form-control>
                           </nz-form-item>
                         </div>
@@ -117,21 +117,12 @@
     <ng-container *nzModalContent>
         <div>
           <nz-divider style="font-size: x-large" nzText="Image Uploader"></nz-divider>
-          <nz-upload
-            nzType="drag"
-            [nzMultiple]="false"
-            nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            (nzChange)="handleImageUpload($event)"
-          >
-            <p class="ant-upload-drag-icon">
-              <span nz-icon nzType="inbox"></span>
-            </p>
-            <p class="ant-upload-text">Click or drag file to this area to upload</p>
-            <p class="ant-upload-hint">
-              Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-            </p>
-          </nz-upload>
-          <button class="m-t-15" nz-button nzType="primary" nzBlock>Upload</button>
+          <input type="file" (change)="handleChange($event)" >
+<!--          <nz-upload-->
+<!--            [nzShowUploadList]="false"-->
+<!--            (nzChange)="handleChange($event)">-->
+<!--            <button class="m-t-15" nz-button nzType="primary" nzBlock>Upload</button>-->
+<!--          </nz-upload>-->
         </div>
         <div class="m-t-10">
           <nz-divider style="font-size: x-large" nzText="Residence Image"></nz-divider>

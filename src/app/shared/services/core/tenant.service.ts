@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {Response} from "../models/response.model";
-import {Auth} from "../models/iauth.model";
+import {Response} from "../../models/response.model";
+import {Auth} from "../../models/iauth.model";
 import {EnvService} from "./env.service";
 
 @Injectable({

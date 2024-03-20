@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 import {User} from "../../../../shared/models/iuser.model";
-import {AuthService} from "../../../../shared/services/auth.service";
-import {CryptoService} from "../../../../shared/services/crypto.service";
+import {AuthService} from "../../../../shared/services/core/auth.service";
+import {CryptoService} from "../../../../shared/services/core/crypto.service";
 import {HttpResponse} from "@angular/common/http";
 import {Response} from "../../../../shared/models/response.model";
 import {Auth} from "../../../../shared/models/iauth.model";

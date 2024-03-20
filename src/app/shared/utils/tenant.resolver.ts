@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import {CryptoService} from "../services/crypto.service";
-import {AuthService} from "../services/auth.service";
+import {CryptoService} from "../services/core/crypto.service";
+import {AuthService} from "../services/core/auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class TenantResolver {
     try {
       return this.cryptoService.decrypt(encryptedTenantId);
     }catch (e){
-        // this.authService.signOut()
+        //this.authService.signOut()
         return '';
     }
   }

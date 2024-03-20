@@ -1,13 +1,13 @@
 import {Injectable, SkipSelf} from "@angular/core";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {EnvService} from "./env.service";
-import {Response} from "../models/response.model";
+import {Response} from "../../models/response.model";
 import {Observable} from "rxjs";
-import {Auth} from "../models/iauth.model";
-import {User} from "../models/iuser.model";
+import {Auth} from "../../models/iauth.model";
+import {User} from "../../models/iuser.model";
 import {CryptoService} from "./crypto.service";
 import {Router} from "@angular/router";
-import {TenantResolver} from "../utils/tenant.resolver";
+import {TenantResolver} from "../../utils/tenant.resolver";
 
 
 @Injectable({

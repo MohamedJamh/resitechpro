@@ -11,6 +11,7 @@ import { SearchPipe } from './pipes/search.pipe';
 import {TenantInterceptor} from "./interceptor/tenant.interceptor";
 import { AlertComponent } from './components/alert/alert.component';
 import {NzAlertModule} from "ng-zorro-antd/alert";
+import {JwtInterceptor} from "./interceptor/token.interceptor";
 
 @NgModule({
   exports: [
@@ -37,7 +38,8 @@ import {NzAlertModule} from "ng-zorro-antd/alert";
   ],
     providers: [
         ThemeConstantService,
-        { provide : HTTP_INTERCEPTORS, useClass: TenantInterceptor, multi: true}
+      //{ provide : HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+      { provide : HTTP_INTERCEPTORS, useClass: TenantInterceptor, multi: true}
     ]
 })
 

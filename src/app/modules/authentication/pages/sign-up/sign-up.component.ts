@@ -1,10 +1,10 @@
 import { Component } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup,  Validators } from '@angular/forms';
-import {TenantService} from "../../../../shared/services/tenant.service";
+import {TenantService} from "../../../../shared/services/core/tenant.service";
 import {take} from "rxjs/operators";
 import {HttpResponse} from "@angular/common/http";
 import {Response} from "../../../../shared/models/response.model";
-import {AuthService} from "../../../../shared/services/auth.service";
+import {AuthService} from "../../../../shared/services/core/auth.service";
 import {User} from "../../../../shared/models/iuser.model";
 import {Auth} from "../../../../shared/models/iauth.model";
 
