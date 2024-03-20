@@ -6,7 +6,7 @@ import {ProfileComponent} from "./pages/profile/profile.component";
 
 const routes: Routes = [
     {
-        path: 'home',
+        path: 'overview',
         component: DashboardComponent,
         data: {
             title: 'Dashboard ',
@@ -14,7 +14,7 @@ const routes: Routes = [
         }
     },
     {
-      path: 'overview',
+      path: 'home',
       component: OverviewDashboardComponent,
       data: {
         title: 'Overview',

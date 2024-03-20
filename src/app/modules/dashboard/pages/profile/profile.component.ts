@@ -14,10 +14,9 @@ export class ProfileComponent implements OnInit{
     ) {}
 
     ngOnInit() {
-      this.authenticatedUser = this.authService.getAuthenticatedUser();
     }
 
-    authenticatedUser : User = null;
+    authenticatedUser : User = this.authService.getAuthenticatedUser();
     updateProfileForm: FormGroup;
     updatePasswordForm: FormGroup;
     updateProfileFormSubmitted: boolean = false;

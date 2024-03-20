@@ -8,7 +8,7 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'dashboard',
         submenu: [
           {
-            path: '/dashboard/overview',
+            path: '/dashboard/home',
             title: 'Overview',
             iconType: 'nzIcon',
             icon: 'bank',
@@ -27,28 +27,35 @@ export const ROUTES: SideNavInterface[] = [
     },
     {
         path: '',
-        title: 'Multi Level Menu',
+        title: 'PMS',
         iconType: 'nzIcon',
         iconTheme: 'outline',
-        icon: 'appstore',
+        icon: 'border-horizontal',
         submenu: [
-            {
-                path: '',
-                title: 'Level 1',
-                iconType: '',
-                icon: '',
-                iconTheme: '',
-                submenu: [
-                    {
-                        path: '',
-                        title: 'Level 2',
-                        iconType: 'nzIcon',
-                        iconTheme: 'outline',
-                        icon: '',
-                        submenu: []
-                    }
-                ]
-            }
+          {
+            path: 'pms/residences',
+            title: 'Residences',
+            iconType: 'nzIcon',
+            icon: 'barcode',
+            iconTheme: 'outline',
+            submenu: []
+          },
+          {
+            path: 'pms/buildings',
+            title: 'Buildings',
+            iconType: 'nzIcon',
+            icon: 'build',
+            iconTheme: 'outline',
+            submenu: []
+          },
+          {
+            path: 'pms/propterites',
+            title: 'Propterites',
+            iconType: 'nzIcon',
+            icon: 'property-safety',
+            iconTheme: 'outline',
+            submenu: []
+          },
         ]
     }
 ]

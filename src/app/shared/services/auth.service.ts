@@ -56,7 +56,7 @@ export class AuthService {
     localStorage.removeItem('_resuser');
     localStorage.removeItem('_resacctoken');
     localStorage.removeItem('_resreftoken');
-    this._router.navigate(['/authentication/login'])
+    this._router.navigate(['/authentication/login']).then(r => alert('You have been signed out'))
   }
   setCurrentUser(authUser: Auth): void {
     const signedInUser = authUser.user!;
@@ -91,8 +91,7 @@ export class AuthService {
       }catch (e) {
         this.signOut();
       }
-    }
-    return {} as User;
+    }else this.signOut();
   }
 
 }

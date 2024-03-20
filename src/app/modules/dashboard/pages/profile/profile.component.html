@@ -68,53 +68,53 @@
             <nz-card>
                 <h5>Update Profile Info</h5>
                 <div class="m-t-20">
-                  <form nz-form [formGroup]="updateProfileForm" class="login-form" nzLayout="vertical" (ngSubmit)="updateProfile()">
-                    <nz-form-item>
-                      <nz-form-label nzRequired nzFor="firstName">First Name</nz-form-label>
-                      <nz-form-control nzErrorTip="Please input your first name!">
-                        <input type="text" nz-input formControlName="firstName" placeholder="First Name" id="firstName">
-                      </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                      <nz-form-label nzRequired nzFor="lastName">Last Name</nz-form-label>
-                      <nz-form-control nzErrorTip="Please input your last name!">
-                        <input type="text" nz-input formControlName="lastName" placeholder="Last Name" id="lastName">
-                      </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                      <nz-form-label nzRequired nzFor="personalEmail">Personal email</nz-form-label>
-                      <nz-form-control nzErrorTip="The input is not valid E-mail!">
-                        <input type="text" nz-input formControlName="personalEmail" placeholder="Username" id="personalEmail">
-                      </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                      <nz-form-label nzFor="email">Personal email</nz-form-label>
-                      <nz-form-control nzErrorTip="The input is not valid E-mail!">
-                        <input type="text" disabled [value]="authenticatedUser.email" nz-input formControlName="email" placeholder="email" id="email">
-                      </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                      <nz-form-label nzFor="organizationName">Organization Name</nz-form-label>
-                      <nz-form-control nzErrorTip="Please input your organization name!">
-                        <input type="text" disabled [value]="authenticatedUser.organizationName" nz-input formControlName="organizationName" placeholder="Organization Name" id="organizationName">
-                      </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                      <nz-form-label nzFor="organizationId">Organization Id</nz-form-label>
-                      <nz-form-control nzErrorTip="Please input your organization id!">
-                        <input type="text" disabled [value]="authenticatedUser.organizationId" nz-input formControlName="organizationId" placeholder="Organization Name" id="organizationId">
-                      </nz-form-control>
-                    </nz-form-item>
-                    <div class="d-flex flex-row-reverse align-items-center justify-content-between">
-                      <nz-form-item>
-                        <nz-form-control>
-                          <div>
-                            <button nz-button class="login-form-button" [nzType]="'primary'" [disabled]="disableSubmitButton()" [nzLoading]="updateProfileFormSubmitted" >Update Info</button>
-                          </div>
-                        </nz-form-control>
-                      </nz-form-item>
-                    </div>
-                  </form>
+<!--                  <form nz-form [formGroup]="updateProfileForm" class="login-form" nzLayout="vertical" (ngSubmit)="updateProfile()">-->
+<!--                    <nz-form-item>-->
+<!--                      <nz-form-label nzRequired nzFor="firstName">First Name</nz-form-label>-->
+<!--                      <nz-form-control nzErrorTip="Please input your first name!">-->
+<!--                        <input type="text" nz-input formControlName="firstName" placeholder="First Name" id="firstName">-->
+<!--                      </nz-form-control>-->
+<!--                    </nz-form-item>-->
+<!--                    <nz-form-item>-->
+<!--                      <nz-form-label nzRequired nzFor="lastName">Last Name</nz-form-label>-->
+<!--                      <nz-form-control nzErrorTip="Please input your last name!">-->
+<!--                        <input type="text" nz-input formControlName="lastName" placeholder="Last Name" id="lastName">-->
+<!--                      </nz-form-control>-->
+<!--                    </nz-form-item>-->
+<!--                    <nz-form-item>-->
+<!--                      <nz-form-label nzRequired nzFor="personalEmail">Personal email</nz-form-label>-->
+<!--                      <nz-form-control nzErrorTip="The input is not valid E-mail!">-->
+<!--                        <input type="text" nz-input formControlName="personalEmail" placeholder="Username" id="personalEmail">-->
+<!--                      </nz-form-control>-->
+<!--                    </nz-form-item>-->
+<!--                    <nz-form-item>-->
+<!--                      <nz-form-label nzFor="email">Personal email</nz-form-label>-->
+<!--                      <nz-form-control nzErrorTip="The input is not valid E-mail!">-->
+<!--                        <input type="text"  [value]="authenticatedUser.email" nz-input formControlName="email" placeholder="email" id="email">-->
+<!--                      </nz-form-control>-->
+<!--                    </nz-form-item>-->
+<!--                    <nz-form-item>-->
+<!--                      <nz-form-label nzFor="organizationName">Organization Name</nz-form-label>-->
+<!--                      <nz-form-control nzErrorTip="Please input your organization name!">-->
+<!--                        <input type="text"  [value]="authenticatedUser.organizationName" nz-input formControlName="organizationName" placeholder="Organization Name" id="organizationName">-->
+<!--                      </nz-form-control>-->
+<!--                    </nz-form-item>-->
+<!--                    <nz-form-item>-->
+<!--                      <nz-form-label nzFor="organizationId">Organization Id</nz-form-label>-->
+<!--                      <nz-form-control nzErrorTip="Please input your organization id!">-->
+<!--                        <input type="text"  [value]="authenticatedUser.organizationId" nz-input formControlName="organizationId" placeholder="Organization Name" id="organizationId">-->
+<!--                      </nz-form-control>-->
+<!--                    </nz-form-item>-->
+<!--                    <div class="d-flex flex-row-reverse align-items-center justify-content-between">-->
+<!--                      <nz-form-item>-->
+<!--                        <nz-form-control>-->
+<!--                          <div>-->
+<!--                            <button nz-button class="login-form-button" [nzType]="'primary'" [disabled]="disableSubmitButton()" [nzLoading]="updateProfileFormSubmitted" >Update Info</button>-->
+<!--                          </div>-->
+<!--                        </nz-form-control>-->
+<!--                      </nz-form-item>-->
+<!--                    </div>-->
+<!--                  </form>-->
                 </div>
             </nz-card>
             <nz-card>

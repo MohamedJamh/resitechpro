@@ -1,0 +1,155 @@
+<div class="page-header has-tab">
+    <h2 class="font-weight-normal">Residences</h2>
+</div>
+<nz-tabset class="page-header-tab">
+    <nz-tab nzTitle="Advanced">
+        <div class="container">
+            <nz-card nzTitle="Add new residence">
+                <form nz-form [formGroup]="addResidenceForm" (ngSubmit)="submitForm()">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <nz-form-item>
+                                <nz-form-label nzFor="label">Label</nz-form-label>
+                                <nz-form-control nzErrorTip="Please input residence label!">
+                                    <input formControlName="label" nz-input type="text" placeholder="Label">
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-label nzFor="location">Location</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input residence location!">
+                              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="location">
+                                <nz-option *ngFor="let city of moroccanCities" [nzLabel]="city" [nzValue]="city"></nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-12">
+                            <nz-form-item>
+                                <nz-form-label nzFor="description">Description</nz-form-label>
+                                <nz-form-control nzErrorTip="Please input residence description!">
+                                    <input formControlName="description" nz-input type="text" placeholder="Description">
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-control nzErrorTip="Please input residence longitude!">
+                              <input [disabled]="true" formControlName="longitude" nz-input type="number" placeholder="Longitude">
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-control nzErrorTip="Please input residence latitude!">
+                              <input [disabled]="true" formControlName="latitude" nz-input type="number" placeholder="Longitude">
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-control nzErrorTip="Please input residence surface!">
+                              <input formControlName="surface" nz-input type="number" placeholder="Surface">
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-control>
+                              <button  nz-button nzType="primary" nzBlock [disabled]="!addResidenceForm.valid">Submit</button>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-12 m-t-10">
+                          <agm-map (mapClick)="onChooseLocation($event)" style="height: 400px;">
+                            <agm-marker
+                              *ngIf="addResidenceForm.get('latitude').value && addResidenceForm.get('longitude').value"
+                              [latitude]="addResidenceForm.get('latitude').value"
+                              [longitude]="addResidenceForm.get('longitude').value"
+                            ></agm-marker>
+                          </agm-map>
+                        </div>
+                    </div>
+                </form>
+            </nz-card>
+        </div>
+    </nz-tab>
+  <nz-tab nzTitle="List Of Residences">
+    <nz-card *ngFor="let residence of residences">
+      <nz-skeleton [nzLoading]="loadingResidences" [nzActive]="loadingResidences">
+        <div class="row">
+          <div class="col-md-4">
+            <img class="img-fluid" [src]="getDefaultOrFirstImage(residence.images)" [alt]="residence.label" style="width: 400px; height: 220px; object-fit: cover;">
+          </div>
+          <div class="col-md-8">
+            <h4 class="m-b-10">{{residence.label}}</h4>
+            <div class="m-b-15">
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <nz-avatar nzSize="small" [nzSrc]="getDefaultOrFirstImage(residence.images)"></nz-avatar>
+                  <div class="m-l-10">
+                    <span class="text-gray font-weight-semibold">owner name here</span>
+                  </div>
+                </div>
+                <div class="text-gray">
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <span>{{residence.location}}</span>
+                </div>
+              </div>
+            </div>
+            <p class="lh-1-8 m-b-20">
+              <span>{{residence.description}}</span>
+            </p>
+            <p class="lh-1-8 m-b-20">
+              <nz-tag [nzColor]="'#87d068'">Surface :{{residence.surface}} m²</nz-tag>
+            </p>
+            <div class="text-right">
+              <a class="font-weight-semibold" nz-button nzType="link" (click)="expandModal(residence)">Expand</a>
+            </div>
+          </div>
+        </div>
+      </nz-skeleton>
+    </nz-card>
+  </nz-tab>
+</nz-tabset>
+<nz-modal [(nzVisible)]="isModalVisible" [nzWidth]="1000" nzTitle="More details on residence" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <div>
+          <nz-divider style="font-size: x-large" nzText="Image Uploader"></nz-divider>
+          <nz-upload
+            nzType="drag"
+            [nzMultiple]="false"
+            nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            (nzChange)="handleImageUpload($event)"
+          >
+            <p class="ant-upload-drag-icon">
+              <span nz-icon nzType="inbox"></span>
+            </p>
+            <p class="ant-upload-text">Click or drag file to this area to upload</p>
+            <p class="ant-upload-hint">
+              Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
+            </p>
+          </nz-upload>
+          <button class="m-t-15" nz-button nzType="primary" nzBlock>Upload</button>
+        </div>
+        <div class="m-t-10">
+          <nz-divider style="font-size: x-large" nzText="Residence Image"></nz-divider>
+          <nz-carousel [nzEffect]="'scrollx'" nzAutoPlay>
+            <div nz-carousel-content *ngFor="let image of residenceToShow.images">
+              <img class="img-fluid"
+                   [src]="image.url"
+                   [alt]="residenceToShow.label"
+                   style="height: 300px; object-fit: cover; width: 100%;"
+              >
+            </div>
+          </nz-carousel>
+        </div>
+        <div class="m-t-10">
+          <nz-divider style="font-size: x-large" nzText="Residence Location"></nz-divider>
+          <agm-map [latitude]="residenceToShow.latitude" [longitude]="residenceToShow.longitude" style="height: 400px;">
+            <agm-marker [latitude]="residenceToShow.latitude" [longitude]="residenceToShow.longitude"></agm-marker>
+          </agm-map>
+        </div>
+    </ng-container>
+</nz-modal>

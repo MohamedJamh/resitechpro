@@ -1,4 +1,5 @@
 import {Role} from "./irole.model";
+import {Image} from "./iimage.model";
 
 export interface IUser{
   id?: number;
@@ -12,6 +13,7 @@ export interface IUser{
   phone? : string;
   place? : string;
   roles? : Role[];
+  images? : Image[];
 }
 export class User implements IUser {
   constructor(public id?: number,
@@ -24,6 +26,7 @@ export class User implements IUser {
               public organizationId? : string,
               public phone? : string,
               public place? : string,
+              public images? : Image[],
               public roles? : Role[]
   ){}
 

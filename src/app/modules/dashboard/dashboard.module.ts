@@ -46,7 +46,16 @@ const antdModule = [
   NzListModule,
   NzCalendarModule,
   NzToolTipModule,
-  NzCheckboxModule
+  NzCheckboxModule,
+  NzAvatarModule,
+  NzCardModule,
+  NzRadioModule,
+  NgChartjsModule,
+  NzPaginationModule,
+  NzFormModule,
+  NzGridModule,
+  NzInputModule,
+  ReactiveFormsModule
 ]
 
 @NgModule({
@@ -54,15 +63,6 @@ const antdModule = [
     SharedModule,
     DashboardRoutingModule,
     ...antdModule,
-    NzAvatarModule,
-    NzCardModule,
-    NzRadioModule,
-    NgChartjsModule,
-    NzPaginationModule,
-    NzFormModule,
-    NzGridModule,
-    NzInputModule,
-    ReactiveFormsModule
   ],
     exports: [],
     declarations: [
