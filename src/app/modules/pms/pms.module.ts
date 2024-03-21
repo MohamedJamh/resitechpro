@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {PmsRoutingModule} from "./pms-routing.module";
-import {ResidencesComponent} from "./pages/setting/residences.component";
+import {ResidenceComponent} from "./pages/residence/residence.component";
 import {NzCardModule} from "ng-zorro-antd/card";
 import {NzAvatarModule} from "ng-zorro-antd/avatar";
 import {NzPaginationModule} from "ng-zorro-antd/pagination";
@@ -27,6 +27,7 @@ import {SharedModule} from "../../shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AgmCoreModule} from '@agm/core';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import {BuildingComponent} from "./pages/building/building.component";
 
 const antdModule = [
   NzCardModule,
@@ -56,7 +57,8 @@ const antdModule = [
 
 @NgModule({
   declarations: [
-    ResidencesComponent,
+    ResidenceComponent,
+    BuildingComponent
   ],
   imports: [
     CommonModule,

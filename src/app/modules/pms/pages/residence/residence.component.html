@@ -2,7 +2,44 @@
     <h2 class="font-weight-normal">Residences</h2>
 </div>
 <nz-tabset class="page-header-tab">
-    <nz-tab nzTitle="Advanced">
+  <nz-tab nzTitle="List Of Residences">
+    <nz-card *ngFor="let residence of residences">
+      <nz-skeleton [nzLoading]="loadingResidences" [nzActive]="loadingResidences">
+        <div class="row">
+          <div class="col-md-4">
+            <img class="img-fluid" [src]="getDefaultOrFirstImage(residence.images,'residence')" [alt]="residence.label" style="width: 400px; height: 220px; object-fit: cover;">
+          </div>
+          <div class="col-md-8">
+            <h4 class="m-b-10">{{residence.label}}</h4>
+            <div class="m-b-15">
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <nz-avatar nzSize="small" [nzSrc]="getDefaultOrFirstImage([],'user')"></nz-avatar>
+                  <div class="m-l-10">
+                    <span class="text-gray font-weight-semibold">{{residence.owner.firstName}} {{residence.owner.lastName}}</span>
+                  </div>
+                </div>
+                <div class="text-gray">
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <span>{{residence.location}}</span>
+                </div>
+              </div>
+            </div>
+            <p class="lh-1-8 m-b-20">
+              <span>{{residence.description}}</span>
+            </p>
+            <p class="lh-1-8 m-b-20">
+              <nz-tag [nzColor]="'#87d068'">Surface :{{residence.surface}} m²</nz-tag>
+            </p>
+            <div class="text-right">
+              <a class="font-weight-semibold" nz-button nzType="link" (click)="expandModal(residence)">Expand</a>
+            </div>
+          </div>
+        </div>
+      </nz-skeleton>
+    </nz-card>
+  </nz-tab>
+  <nz-tab nzTitle="Advanced">
         <div class="container">
             <nz-card nzTitle="Add new residence">
                 <form nz-form [formGroup]="addResidenceForm" (ngSubmit)="submitForm()">
@@ -75,43 +112,6 @@
             </nz-card>
         </div>
     </nz-tab>
-  <nz-tab nzTitle="List Of Residences">
-    <nz-card *ngFor="let residence of residences">
-      <nz-skeleton [nzLoading]="loadingResidences" [nzActive]="loadingResidences">
-        <div class="row">
-          <div class="col-md-4">
-            <img class="img-fluid" [src]="getDefaultOrFirstImage(residence.images)" [alt]="residence.label" style="width: 400px; height: 220px; object-fit: cover;">
-          </div>
-          <div class="col-md-8">
-            <h4 class="m-b-10">{{residence.label}}</h4>
-            <div class="m-b-15">
-              <div class="d-flex align-items-center">
-                <div class="d-flex align-items-center">
-                  <nz-avatar nzSize="small" [nzSrc]="getDefaultOrFirstImage(residence.images)"></nz-avatar>
-                  <div class="m-l-10">
-                    <span class="text-gray font-weight-semibold">owner name here</span>
-                  </div>
-                </div>
-                <div class="text-gray">
-                  <nz-divider nzType="vertical"></nz-divider>
-                  <span>{{residence.location}}</span>
-                </div>
-              </div>
-            </div>
-            <p class="lh-1-8 m-b-20">
-              <span>{{residence.description}}</span>
-            </p>
-            <p class="lh-1-8 m-b-20">
-              <nz-tag [nzColor]="'#87d068'">Surface :{{residence.surface}} m²</nz-tag>
-            </p>
-            <div class="text-right">
-              <a class="font-weight-semibold" nz-button nzType="link" (click)="expandModal(residence)">Expand</a>
-            </div>
-          </div>
-        </div>
-      </nz-skeleton>
-    </nz-card>
-  </nz-tab>
 </nz-tabset>
 <nz-modal [(nzVisible)]="isModalVisible" [nzWidth]="1000" nzTitle="More details on residence" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <ng-container *nzModalContent>

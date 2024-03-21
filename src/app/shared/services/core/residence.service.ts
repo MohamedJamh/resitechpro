@@ -19,6 +19,9 @@ export class ResidenceService{
   getAllResidences(){
     return this.httpClient.get<Response<Residence[]>>(this.envService.apiUrl + this.endpointPrefix ,{observe : 'response'});
   }
+  getAllResidencesLabels(){
+    return this.httpClient.get<Response<string[]>>(this.envService.apiUrl + this.endpointPrefix + "/labels" ,{observe : 'response'});
+  }
 
   createResidence(residence: Residence){
     return this.httpClient.post<Response<Residence>>(this.envService.apiUrl + this.endpointPrefix , residence, {observe: 'response'});
