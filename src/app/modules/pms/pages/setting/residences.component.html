@@ -117,12 +117,17 @@
     <ng-container *nzModalContent>
         <div>
           <nz-divider style="font-size: x-large" nzText="Image Uploader"></nz-divider>
-          <input type="file" (change)="handleChange($event)" >
-<!--          <nz-upload-->
-<!--            [nzShowUploadList]="false"-->
-<!--            (nzChange)="handleChange($event)">-->
-<!--            <button class="m-t-15" nz-button nzType="primary" nzBlock>Upload</button>-->
-<!--          </nz-upload>-->
+          <form>
+            <nz-form-item>
+              <nz-form-label nzFor="imageUpload"
+                             class="ant-btn text-uppercase d-flex justify-content-center align-items-center"
+                             style="width: 100%; background-color: #59ffd6"
+              > Upload Image </nz-form-label>
+              <nz-form-control hidden="hidden" nzErrorTip="Please input residence description!">
+                <input id="imageUpload" type="file" (change)="handleChange($event)" >
+              </nz-form-control>
+            </nz-form-item>
+          </form>
         </div>
         <div class="m-t-10">
           <nz-divider style="font-size: x-large" nzText="Residence Image"></nz-divider>
