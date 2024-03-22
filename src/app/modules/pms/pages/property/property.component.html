@@ -21,7 +21,7 @@
                 </div>
                 <div class="text-gray">
                   <nz-divider nzType="vertical"></nz-divider>
-                  <span>{{property.residence.label}}</span>
+                  <span>{{property.building.residence.label}}</span>
                 </div>
               </div>
             </div>
@@ -29,18 +29,37 @@
               <span>{{property.description}}</span>
             </p>
             <p class="lh-1-8 m-b-20">
-              <nz-tag [nzColor]="'#87d068'">Location : {{property.building.residence.location}}</nz-tag>
-              <nz-tag [nzColor]="'#87d068'">Residence : {{property.building.residence.label}}</nz-tag>
-              <nz-tag [nzColor]="'#87d068'">Building :{{property.building.label}}</nz-tag>
+              <nz-tag [nzColor]="'#87d068'">
+                <span class="text-uppercase font-weight-bold">Location :</span> {{property.building.residence.location}}
+              </nz-tag>
+              <nz-tag [nzColor]="'#87d068'">
+                <span class="text-uppercase font-weight-bold">Type :</span> {{property.propertyType.toLowerCase()}}
+              </nz-tag>
+              <nz-tag [nzColor]="'#87d068'">
+                <span class="text-uppercase font-weight-bold">Building :</span>{{property.building.label}}
+              </nz-tag>
             </p>
             <p class="lh-1-8 m-b-20">
-              <nz-tag [nzColor]="'#87d068'">Floor number :{{property.floorNumber}}</nz-tag>
-              <nz-tag [nzColor]="'#87d068'">Total rooms :{{property.numberBedrooms + property.numberRooms}}</nz-tag>
-              <nz-tag [nzColor]="'#87d068'">Bathrooms :{{property.numberBathrooms}}</nz-tag>
+              <nz-tag [nzColor]="'cyan'" *ngIf="property.floorNumber != null">
+                <span class="text-uppercase font-weight-bold">Floor number : </span>{{property.floorNumber}}
+              </nz-tag>
+              <nz-tag [nzColor]="'cyan'" *ngIf="property.numberRooms != null && property.numberBedrooms">
+                <span class="text-uppercase font-weight-bold">Total rooms : </span>{{property.numberBedrooms + property.numberRooms}}
+              </nz-tag>
+              <nz-tag [nzColor]="'cyan'" *ngIf="property.numberBathrooms != null">
+                <span class="text-uppercase font-weight-bold">Bathrooms : </span>{{property.numberBathrooms}}
+              </nz-tag>
+              <nz-tag [nzColor]="'cyan'" *ngIf="property.numberWindows != null">
+                <span class="text-uppercase font-weight-bold">Windows : </span>{{property.numberWindows}}
+              </nz-tag>
             </p>
             <p class="lh-1-8 m-b-20">
-              <nz-tag [nzColor]="'gold'">Surface :{{property.surface}}</nz-tag>
-              <nz-tag [nzColor]="'gold'">Rent Value :{{property.rentValue}} $</nz-tag>
+              <nz-tag [nzColor]="'orange'">
+                <span class="text-uppercase font-weight-bold">Surface : </span>{{property.surface}}
+              </nz-tag>
+              <nz-tag [nzColor]="'gold'">
+                <span class="text-uppercase font-weight-bold">Rent Value :</span>{{property.rentValue}} $
+              </nz-tag>
             </p>
             <div class="text-right">
               <a class="font-weight-semibold" nz-button nzType="link" (click)="expandModal(property)">Expand</a>
@@ -101,11 +120,11 @@
                           <nz-form-item>
                             <nz-form-label nzFor="surface">Surface</nz-form-label>
                             <nz-form-control nzErrorTip="Please input property surface!">
-                              <input formControlName="surface" nz-input type="number" min="1" placeholder="surface">
+                              <input formControlName="surface" nz-input type="number" min="1" [max]="maxSurface" placeholder="Property Surface">
                             </nz-form-control>
                           </nz-form-item>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" *ngIf=" ['HOUSE','APARTMENT','OFFICE'].includes(addPropertyForm.get('propertyType').value)">
                           <nz-form-item>
                             <nz-form-label nzFor="numberRooms">Rooms number</nz-form-label>
                             <nz-form-control nzErrorTip="Please input property rooms number!">
@@ -113,7 +132,7 @@
                             </nz-form-control>
                           </nz-form-item>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" *ngIf=" ['HOUSE','APARTMENT','OFFICE'].includes(addPropertyForm.get('propertyType').value)">
                           <nz-form-item>
                             <nz-form-label nzFor="numberBedrooms">Bedrooms number</nz-form-label>
                             <nz-form-control nzErrorTip="Please input property bedrooms number!">
@@ -121,11 +140,35 @@
                             </nz-form-control>
                           </nz-form-item>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" *ngIf=" ['HOUSE','APARTMENT','OFFICE'].includes(addPropertyForm.get('propertyType').value)">
                           <nz-form-item>
                             <nz-form-label nzFor="numberBathrooms">Bathrooms number</nz-form-label>
                             <nz-form-control nzErrorTip="Please input property bathrooms number!">
                               <input formControlName="numberBathrooms" nz-input type="number" min="1" placeholder="How many bathrooms ?">
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6" *ngIf=" ['HOUSE','APARTMENT','OFFICE'].includes(addPropertyForm.get('propertyType').value)">
+                          <nz-form-item>
+                            <nz-form-label nzFor="numberBathrooms">Windows number</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input property windows number!">
+                              <input formControlName="numberWindows" nz-input type="number" min="1" placeholder="How many windows ?">
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-label nzFor="floorNumber">Floor</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input property floor!">
+                              <input formControlName="floorNumber" nz-input type="number" min="1" [max]="maxFloorByBuilding" placeholder="In wich floor ?">
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-label nzFor="rentValue">Rent Price</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input property rent price!">
+                              <input formControlName="rentValue" nz-input type="number" min="1" placeholder="How much per month ?">
                             </nz-form-control>
                           </nz-form-item>
                         </div>
@@ -184,8 +227,8 @@
         </div>
         <div class="m-t-10">
           <nz-divider style="font-size: x-large" nzText="Residence Location"></nz-divider>
-          <agm-map [latitude]="propertyToShow.residence.latitude" [longitude]="propertyToShow.residence.longitude" style="height: 400px;">
-            <agm-marker [latitude]="propertyToShow.residence.latitude" [longitude]="propertyToShow.residence.longitude"></agm-marker>
+          <agm-map [latitude]="propertyToShow.building.residence.latitude" [longitude]="propertyToShow.building.residence.longitude" style="height: 400px;">
+            <agm-marker [latitude]="propertyToShow.building.residence.latitude" [longitude]="propertyToShow.building.residence.longitude"></agm-marker>
           </agm-map>
         </div>
     </ng-container>

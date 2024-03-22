@@ -24,9 +24,12 @@ export class PropertyComponent {
     isModalVisible: boolean = false;
     addMapLat = null;
     addMapLng = null;
+    maxSurface: number = 1;
+    maxFloorByBuilding: number = 1;
     PropertyTypes: PropertyTypeEnum[] = [
       PropertyTypeEnum.APARTMENT,
       PropertyTypeEnum.HOUSE,
+      PropertyTypeEnum.OFFICE,
       PropertyTypeEnum.GARAGE,
       PropertyTypeEnum.SHOP
     ];
@@ -46,10 +49,10 @@ export class PropertyComponent {
           propertyType: [null, [Validators.required]],
           buildingLabel: [null, [Validators.required]],
           surface: [null, [Validators.required]],
-          numberRooms: [null, [Validators.required]],
-          numberBathrooms: [null, [Validators.required]],
-          numberBedrooms: [null, [Validators.required]],
-          numberWindows: [null, [Validators.required]],
+          numberRooms: [null],
+          numberBathrooms: [null],
+          numberBedrooms: [null],
+          numberWindows: [null],
           floorNumber: [null, [Validators.required]],
           rentValue: [null, [Validators.required]],
         })
@@ -62,6 +65,8 @@ export class PropertyComponent {
           if (building.label == value) {
             this.addMapLat = building.residence.latitude;
             this.addMapLng = building.residence.longitude;
+            this.maxSurface = building.residence.surface + 1;
+            this.maxFloorByBuilding = building.numberFloors ;
           }
         })
       })
@@ -142,4 +147,7 @@ export class PropertyComponent {
         }
     }
 
+  getMaxSurfaceByBuilding() : number {
+    return undefined;
+  }
 }
