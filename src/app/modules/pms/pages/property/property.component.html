@@ -1,0 +1,192 @@
+<div class="page-header has-tab">
+    <h2 class="font-weight-normal">Properties</h2>
+</div>
+<nz-tabset class="page-header-tab">
+  <nz-tab nzTitle="List Of Properties">
+    <nz-card *ngFor="let property of properties">
+      <nz-skeleton [nzLoading]="loadingProperties" [nzActive]="loadingProperties">
+        <div class="row">
+          <div class="col-md-4">
+            <img class="img-fluid" [src]="getDefaultOrFirstImage(property.images,'property')" [alt]="property.label" style="width: 400px; height: 220px; object-fit: cover;">
+          </div>
+          <div class="col-md-8">
+            <h4 class="m-b-10">{{property.label}}</h4>
+            <div class="m-b-15">
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <nz-avatar nzSize="small" [nzSrc]="getDefaultOrFirstImage([],'user')"></nz-avatar>
+                  <div class="m-l-10">
+                    <span class="text-gray font-weight-semibold">{{property.building.residence.owner.firstName}} {{property.building.residence.owner.lastName}}</span>
+                  </div>
+                </div>
+                <div class="text-gray">
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <span>{{property.residence.label}}</span>
+                </div>
+              </div>
+            </div>
+            <p class="lh-1-8 m-b-20">
+              <span>{{property.description}}</span>
+            </p>
+            <p class="lh-1-8 m-b-20">
+              <nz-tag [nzColor]="'#87d068'">Location : {{property.building.residence.location}}</nz-tag>
+              <nz-tag [nzColor]="'#87d068'">Residence : {{property.building.residence.label}}</nz-tag>
+              <nz-tag [nzColor]="'#87d068'">Building :{{property.building.label}}</nz-tag>
+            </p>
+            <p class="lh-1-8 m-b-20">
+              <nz-tag [nzColor]="'#87d068'">Floor number :{{property.floorNumber}}</nz-tag>
+              <nz-tag [nzColor]="'#87d068'">Total rooms :{{property.numberBedrooms + property.numberRooms}}</nz-tag>
+              <nz-tag [nzColor]="'#87d068'">Bathrooms :{{property.numberBathrooms}}</nz-tag>
+            </p>
+            <p class="lh-1-8 m-b-20">
+              <nz-tag [nzColor]="'gold'">Surface :{{property.surface}}</nz-tag>
+              <nz-tag [nzColor]="'gold'">Rent Value :{{property.rentValue}} $</nz-tag>
+            </p>
+            <div class="text-right">
+              <a class="font-weight-semibold" nz-button nzType="link" (click)="expandModal(property)">Expand</a>
+            </div>
+          </div>
+        </div>
+      </nz-skeleton>
+    </nz-card>
+  </nz-tab>
+  <nz-tab nzTitle="Advanced">
+        <div class="container">
+            <nz-card nzTitle="Add new property">
+                <form nz-form [formGroup]="addPropertyForm" (ngSubmit)="submitForm()">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <nz-form-item>
+                                <nz-form-label nzFor="label">Label</nz-form-label>
+                                <nz-form-control nzErrorTip="Please input residence label!">
+                                    <input formControlName="label" nz-input type="text" placeholder="Label">
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-label nzFor="buildingLabel">Building</nz-form-label>
+                            <nz-form-control nzErrorTip="Please choose building label!">
+                              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a building" formControlName="buildingLabel">
+                                <nz-option  *ngFor="let building of buildings"
+                                            [nzLabel]="building.label"
+                                            [nzValue]="building.label"
+                                ></nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-12">
+                            <nz-form-item>
+                                <nz-form-label nzFor="description">Description</nz-form-label>
+                                <nz-form-control nzErrorTip="Please input building description!">
+                                    <input formControlName="description" nz-input type="text" placeholder="Description">
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-label nzFor="propertyType">Property Type</nz-form-label>
+                            <nz-form-control nzErrorTip="Please choose property type!">
+                              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a type" formControlName="propertyType">
+                                <nz-option  *ngFor="let property of PropertyTypes"
+                                            [nzLabel]="property.toString()"
+                                            [nzValue]="property.toString()"
+                                ></nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-label nzFor="surface">Surface</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input property surface!">
+                              <input formControlName="surface" nz-input type="number" min="1" placeholder="surface">
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-label nzFor="numberRooms">Rooms number</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input property rooms number!">
+                              <input formControlName="numberRooms" nz-input type="number" min="1" placeholder="How many rooms ?">
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-label nzFor="numberBedrooms">Bedrooms number</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input property bedrooms number!">
+                              <input formControlName="numberBedrooms" nz-input type="number" min="1" placeholder="How many bedrooms ?">
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-label nzFor="numberBathrooms">Bathrooms number</nz-form-label>
+                            <nz-form-control nzErrorTip="Please input property bathrooms number!">
+                              <input formControlName="numberBathrooms" nz-input type="number" min="1" placeholder="How many bathrooms ?">
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-6">
+                          <nz-form-item>
+                            <nz-form-control>
+                              <button  nz-button nzType="primary" nzBlock [disabled]="!addPropertyForm.valid">Submit</button>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-12 m-t-10">
+                          <agm-map
+                            [latitude]="addMapLat != null ? addMapLat : 0"
+                            [longitude]="addMapLng != null ? addMapLng : 0"
+                            style="height: 400px;">
+                            <agm-marker
+                              *ngIf="addMapLat && addMapLng"
+                              [latitude]="addMapLat"
+                              [longitude]="addMapLng"
+                            ></agm-marker>
+                          </agm-map>
+                        </div>
+                    </div>
+                </form>
+            </nz-card>
+        </div>
+    </nz-tab>
+</nz-tabset>
+<nz-modal [(nzVisible)]="isModalVisible" [nzWidth]="1000" nzTitle="More details on residence" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <div>
+          <nz-divider style="font-size: x-large" nzText="Image Uploader"></nz-divider>
+          <form>
+            <nz-form-item>
+              <nz-form-label nzFor="imageUpload"
+                             class="ant-btn text-uppercase d-flex justify-content-center align-items-center"
+                             style="width: 100%; background-color: #59ffd6"
+              > Upload Image </nz-form-label>
+              <nz-form-control hidden="hidden" nzErrorTip="Please input residence description!">
+                <input id="imageUpload" type="file" (change)="handleChange($event)" >
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+        </div>
+        <div class="m-t-10">
+          <nz-divider style="font-size: x-large" nzText="Residence Image"></nz-divider>
+          <nz-carousel [nzEffect]="'scrollx'" nzAutoPlay>
+            <div nz-carousel-content *ngFor="let image of propertyToShow.images">
+              <img class="img-fluid"
+                   [src]="image.url"
+                   [alt]="propertyToShow.label"
+                   style="height: 300px; object-fit: cover; width: 100%;"
+              >
+            </div>
+          </nz-carousel>
+        </div>
+        <div class="m-t-10">
+          <nz-divider style="font-size: x-large" nzText="Residence Location"></nz-divider>
+          <agm-map [latitude]="propertyToShow.residence.latitude" [longitude]="propertyToShow.residence.longitude" style="height: 400px;">
+            <agm-marker [latitude]="propertyToShow.residence.latitude" [longitude]="propertyToShow.residence.longitude"></agm-marker>
+          </agm-map>
+        </div>
+    </ng-container>
+</nz-modal>

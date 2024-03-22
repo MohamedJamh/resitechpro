@@ -57,7 +57,7 @@
                           <nz-form-item>
                             <nz-form-label nzFor="residenceLabel">Residence</nz-form-label>
                             <nz-form-control nzErrorTip="Please choose residence label!">
-                              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="residenceLabel">
+                              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a residence" formControlName="residenceLabel">
                                 <nz-option  *ngFor="let residence of residences"
                                             [nzLabel]="residence.label"
                                             [nzValue]="residence.label"
@@ -69,7 +69,7 @@
                         <div class="col-md-12">
                             <nz-form-item>
                                 <nz-form-label nzFor="description">Description</nz-form-label>
-                                <nz-form-control nzErrorTip="Please input residence description!">
+                                <nz-form-control nzErrorTip="Please input building description!">
                                     <input formControlName="description" nz-input type="text" placeholder="Description">
                                 </nz-form-control>
                             </nz-form-item>

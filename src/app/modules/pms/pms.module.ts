@@ -28,6 +28,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {AgmCoreModule} from '@agm/core';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import {BuildingComponent} from "./pages/building/building.component";
+import {PropertyComponent} from "./pages/property/property.component";
 
 const antdModule = [
   NzCardModule,
@@ -58,7 +59,8 @@ const antdModule = [
 @NgModule({
   declarations: [
     ResidenceComponent,
-    BuildingComponent
+    BuildingComponent,
+    PropertyComponent
   ],
   imports: [
     CommonModule,

@@ -49,8 +49,8 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: 'pms/propterites',
-            title: 'Propterites',
+            path: 'pms/properties',
+            title: 'Properties',
             iconType: 'nzIcon',
             icon: 'property-safety',
             iconTheme: 'outline',
