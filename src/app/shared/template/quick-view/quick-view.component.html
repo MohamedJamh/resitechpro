@@ -1,0 +1,13 @@
+<div class="m-b-30">
+  <h5 class="m-b-0">Header Color</h5>
+  <p>Config header background color</p>
+  <div class="m-t-10">
+    <nz-radio-group class="color-selector" [(ngModel)]="selectedHeaderColor" (ngModelChange)="changeHeaderColor()">
+      <label class="bg-white" nz-radio nzValue="default"></label>
+      <label class="bg-primary" nz-radio nzValue="primary"></label>
+      <label class="bg-success" nz-radio nzValue="success"></label>
+      <label class="bg-secondary" nz-radio nzValue="secondary"></label>
+      <label class="bg-danger" nz-radio nzValue="danger"></label>
+    </nz-radio-group>
+  </div>
+</div>
