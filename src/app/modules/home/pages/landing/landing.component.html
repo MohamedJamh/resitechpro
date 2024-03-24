@@ -1,0 +1,103 @@
+<nz-layout>
+  <nz-header class="d-flex" style="background-color: #223143;">
+    <div class="logo">
+      <img src="assets/images/logo/logo-white.png" alt="Logo">
+    </div>
+    <ul class="m-l-40" nz-menu nzTheme="dark" nzMode="horizontal">
+      <li nz-menu-item>Home</li>
+      <li nz-menu-item>Pricing</li>
+      <li nz-menu-item>Contact us</li>
+    </ul>
+  </nz-header>
+  <nz-content>
+    <div>
+      <section class="carousel-banner">
+        <nz-carousel [nzDotPosition]="dotPosition" nzAutoPlay>
+          <div nz-carousel-content style="height: 280px; width: 100%; background: url('assets/images/welcome-carousel/banner1.png')" ></div>
+          <div nz-carousel-content style="height: 280px; width: 100%; background: url('assets/images/welcome-carousel/banner-2.jpg')" ></div>
+          <div nz-carousel-content style="height: 280px; width: 100%; background: url('assets/images/welcome-carousel/banner-3.jpg')" ></div>
+        </nz-carousel>
+      </section>
+      <section class="inner-content">
+        <div class="container">
+          <div class="text-center m-t-30 m-b-40">
+            <h2>Our Partner Owners</h2>
+            <p class="w-45 m-h-auto m-b-30">People who are using our saas platform to mange there properties and residences.</p>
+
+            <div class="row" >
+              <div class="col-md-3" *ngFor="let item of memberList">
+                <nz-card>
+                  <div class="m-t-20 text-center">
+                    <nz-avatar class="shadow" [nzSize]="100" nzIcon="user" [nzSrc]="item.img"></nz-avatar>
+                    <h4 class="m-t-30">{{item.name}}</h4>
+                    <p>{{item.mail}}</p>
+                  </div>
+                  <div class="text-center m-t-15">
+                    <button class="m-r-10" nz-button nzType="default" nzShape="circle"><i nz-icon nzType="facebook"></i></button>
+                    <button class="m-r-10" nz-button nzType="default" nzShape="circle"><i nz-icon nzType="twitter"></i></button>
+                    <button class="m-r-10" nz-button nzType="default" nzShape="circle"><i nz-icon nzType="instagram"></i></button>
+                  </div>
+                  <div class="text-center m-t-30">
+                    <a [routerLink]="['/pages/profile']" nz-button nzType="primary" nzGhost>
+                      <i nz-icon nzType="whats-app" theme="outline"></i>
+                      <span class="m-l-5">Contact</span>
+                    </a>
+                  </div>
+                </nz-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="brand-section" >
+        <div class="p-t-50 p-b-50">
+          <img
+            *ngFor="let brand of brandList"
+            class="img-fluid"
+            [src]="brand.img"
+          >
+        </div>
+      </section>
+      <section style="padding: 30px 50px;" >
+        <div class="container">
+          <h2 style="color: #666666">Look For Your wanted property now !</h2>
+          <form class="m-t-20" nz-form [formGroup]="searchForm" (ngSubmit)="searchForProperties()">
+            <div class="row">
+              <div class="col-md-4">
+                <nz-form-item>
+                  <nz-form-label nzFor="location">Location</nz-form-label>
+                  <nz-form-control nzErrorTip="Please input residence location!">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="location">
+                      <nz-option *ngFor="let city of moroccanCities" [nzLabel]="city" [nzValue]="city"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div class="col-md-4">
+                <nz-form-item>
+                  <nz-form-label nzFor="propertyType">Property Type</nz-form-label>
+                  <nz-form-control nzErrorTip="Please choose property type!">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a type" formControlName="propertyType">
+                      <nz-option  *ngFor="let property of PropertyTypes"
+                                  [nzLabel]="property.toString()"
+                                  [nzValue]="property.toString()"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div class="col-md-4">
+                <nz-form-item>
+                  <nz-form-control nzErrorTip="Please input residence label!">
+                    <button nz-button nzType="primary" nzSize="large" nzBlock>Search</button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </nz-content>
+  <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+</nz-layout>

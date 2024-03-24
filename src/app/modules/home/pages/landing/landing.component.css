@@ -1,0 +1,26 @@
+
+[nz-carousel-content] {
+  text-align: center;
+  height: 1000px;
+  line-height: 160px;
+  background: #364d79;
+  color: #fff;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h3 {
+  color: #fff;
+  margin-bottom: 0;
+  user-select: none;
+}
+
+.brand-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 40px;
+  box-shadow: 0 0 20px rgba(0,0,0,.15)!important;
+}
