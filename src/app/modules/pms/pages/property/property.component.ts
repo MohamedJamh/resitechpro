@@ -126,8 +126,8 @@ export class PropertyComponent {
         this.propertyToShow = null;
     }
 
-    expandModal(building: Building) {
-        this.propertyToShow = building;
+    expandModal(property: Property) {
+        this.propertyToShow = property;
         this.isModalVisible = true;
     }
     handleCancel() {

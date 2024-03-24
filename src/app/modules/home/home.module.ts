@@ -18,7 +18,11 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzRadioModule} from "ng-zorro-antd/radio";
 import {NzAvatarModule} from "ng-zorro-antd/avatar";
 import {NzIconModule} from "ng-zorro-antd/icon";
-
+import {NzDividerModule} from "ng-zorro-antd/divider";
+import {NzSkeletonModule} from "ng-zorro-antd/skeleton";
+import {NzTabsModule} from "ng-zorro-antd/tabs";
+import {NzTagModule} from "ng-zorro-antd/tag";
+import {NzModalModule} from "ng-zorro-antd/modal";
 
 
 @NgModule({
@@ -44,7 +48,12 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     ReactiveFormsModule,
     NzRadioModule,
     NzAvatarModule,
-    NzIconModule
+    NzIconModule,
+    NzDividerModule,
+    NzSkeletonModule,
+    NzTabsModule,
+    NzTagModule,
+    NzModalModule
   ]
 })
 export class HomeModule { }

@@ -14,8 +14,8 @@
       <section class="carousel-banner">
         <nz-carousel [nzDotPosition]="dotPosition" nzAutoPlay>
           <div nz-carousel-content style="height: 280px; width: 100%; background: url('assets/images/welcome-carousel/banner1.png')" ></div>
-          <div nz-carousel-content style="height: 280px; width: 100%; background: url('assets/images/welcome-carousel/banner-2.jpg')" ></div>
-          <div nz-carousel-content style="height: 280px; width: 100%; background: url('assets/images/welcome-carousel/banner-3.jpg')" ></div>
+          <div nz-carousel-content style="height: 280px; width: 100%; background: url('assets/images/welcome-carousel/banner-2.png')" ></div>
+          <div nz-carousel-content style="height: 280px; width: 100%; background: url('assets/images/welcome-carousel/banner-3.png')" ></div>
         </nz-carousel>
       </section>
       <section class="inner-content">
@@ -61,13 +61,14 @@
       <section style="padding: 30px 50px;" >
         <div class="container">
           <h2 style="color: #666666">Look For Your wanted property now !</h2>
-          <form class="m-t-20" nz-form [formGroup]="searchForm" (ngSubmit)="searchForProperties()">
+          <form class="m-t-20" nz-form [formGroup]="searchFormGroup" (ngSubmit)="searchForProperties()">
             <div class="row">
               <div class="col-md-4">
                 <nz-form-item>
-                  <nz-form-label nzFor="location">Location</nz-form-label>
+                  <nz-form-label nzFor="city">City</nz-form-label>
                   <nz-form-control nzErrorTip="Please input residence location!">
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="location">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="city">
+                      <nz-option nzLabel="all" nzValue="all"></nz-option>
                       <nz-option *ngFor="let city of moroccanCities" [nzLabel]="city" [nzValue]="city"></nz-option>
                     </nz-select>
                   </nz-form-control>
@@ -78,6 +79,7 @@
                   <nz-form-label nzFor="propertyType">Property Type</nz-form-label>
                   <nz-form-control nzErrorTip="Please choose property type!">
                     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a type" formControlName="propertyType">
+                      <nz-option nzLabel="all" nzValue="all"></nz-option>
                       <nz-option  *ngFor="let property of PropertyTypes"
                                   [nzLabel]="property.toString()"
                                   [nzValue]="property.toString()"
@@ -86,18 +88,109 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-4" >
                 <nz-form-item>
-                  <nz-form-control nzErrorTip="Please input residence label!">
-                    <button nz-button nzType="primary" nzSize="large" nzBlock>Search</button>
+                  <nz-form-control >
+                    <button nz-button nzType="primary" nzSize="large" nzBlock >Search</button>
                   </nz-form-control>
                 </nz-form-item>
               </div>
             </div>
           </form>
+          <div>
+            <nz-card *ngFor="let property of properties">
+              <nz-skeleton [nzLoading]="loadingProperties" [nzActive]="loadingProperties">
+                <div class="row">
+                  <div class="col-md-4">
+                    <img class="img-fluid" [src]="property.images[0].url" [alt]="property.label" style="width: 400px; height: 220px; object-fit: cover;">
+                  </div>
+                  <div class="col-md-8">
+                    <h4 class="m-b-10">{{property.label}}</h4>
+                    <div class="m-b-15">
+                      <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center">
+                          <nz-avatar nzSize="small" [nzSrc]="getDefaultOrFirstImage([],'user')"></nz-avatar>
+                          <div class="m-l-10">
+                            <span class="text-gray font-weight-semibold">{{property.building.residence.owner.firstName}} {{property.building.residence.owner.lastName}}</span>
+                          </div>
+                        </div>
+                        <div class="text-gray">
+                          <nz-divider nzType="vertical"></nz-divider>
+                          <span>{{property.building.residence.label}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="lh-1-8 m-b-20">
+                      <span>{{property.description}}</span>
+                    </p>
+                    <p class="lh-1-8 m-b-20">
+                      <nz-tag [nzColor]="'#87d068'">
+                        <span class="text-uppercase font-weight-bold">Location :</span> {{property.building.residence.location}}
+                      </nz-tag>
+                      <nz-tag [nzColor]="'#87d068'">
+                        <span class="text-uppercase font-weight-bold">Type :</span> {{property.propertyType.toLowerCase()}}
+                      </nz-tag>
+                      <nz-tag [nzColor]="'#87d068'">
+                        <span class="text-uppercase font-weight-bold">Building :</span>{{property.building.label}}
+                      </nz-tag>
+                    </p>
+                    <p class="lh-1-8 m-b-20">
+                      <nz-tag [nzColor]="'cyan'" *ngIf="property.floorNumber != null">
+                        <span class="text-uppercase font-weight-bold">Floor number : </span>{{property.floorNumber}}
+                      </nz-tag>
+                      <nz-tag [nzColor]="'cyan'" *ngIf="property.numberRooms != null && property.numberBedrooms">
+                        <span class="text-uppercase font-weight-bold">Total rooms : </span>{{property.numberBedrooms + property.numberRooms}}
+                      </nz-tag>
+                      <nz-tag [nzColor]="'cyan'" *ngIf="property.numberBathrooms != null">
+                        <span class="text-uppercase font-weight-bold">Bathrooms : </span>{{property.numberBathrooms}}
+                      </nz-tag>
+                      <nz-tag [nzColor]="'cyan'" *ngIf="property.numberWindows != null">
+                        <span class="text-uppercase font-weight-bold">Windows : </span>{{property.numberWindows}}
+                      </nz-tag>
+                    </p>
+                    <p class="lh-1-8 m-b-20">
+                      <nz-tag [nzColor]="'orange'">
+                        <span class="text-uppercase font-weight-bold">Surface : </span>{{property.surface}}
+                      </nz-tag>
+                      <nz-tag [nzColor]="'gold'">
+                        <span class="text-uppercase font-weight-bold">Rent Value :</span>{{property.rentValue}} $
+                      </nz-tag>
+                    </p>
+                    <div class="text-right">
+                      <a class="font-weight-semibold" nz-button nzType="link" (click)="expandModal(property)">Expand</a>
+                    </div>
+                  </div>
+                </div>
+              </nz-skeleton>
+            </nz-card>
+          </div>
         </div>
       </section>
+
+      <nz-modal [(nzVisible)]="isModalVisible" [nzWidth]="1000" nzTitle="More details on Property" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <ng-container *nzModalContent>
+          <div class="m-t-10">
+            <nz-divider style="font-size: x-large" nzText="Property Images"></nz-divider>
+            <nz-carousel [nzEffect]="'scrollx'" nzAutoPlay>
+              <div nz-carousel-content *ngFor="let image of propertyToShow.images">
+                <img class="img-fluid"
+                     [src]="image.url"
+                     [alt]="propertyToShow.label"
+                     style="height: 300px; object-fit: cover; width: 100%;"
+                >
+              </div>
+            </nz-carousel>
+          </div>
+          <div class="m-t-10">
+            <nz-divider style="font-size: x-large" nzText="Residence Location"></nz-divider>
+            <agm-map [latitude]="propertyToShow.building.residence.latitude" [longitude]="propertyToShow.building.residence.longitude" style="height: 400px;">
+              <agm-marker [latitude]="propertyToShow.building.residence.latitude" [longitude]="propertyToShow.building.residence.longitude"></agm-marker>
+            </agm-map>
+          </div>
+        </ng-container>
+      </nz-modal>
+
     </div>
   </nz-content>
-  <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+  <nz-footer class="text-center text-white p-t-25 p-b-25" style="background-color: #223143;">Resitech using Ant Designe ©2024 Implement By Angular</nz-footer>
 </nz-layout>
