@@ -7,7 +7,7 @@ export class ThemeConstantService {
     // Theme Config
     isMenuFolded = false;
     isSideNavDark = false;
-    headerColor = 'default';
+    headerColor = 'primary';
     private colorConfig: any = {
         colors: {
             magenta: '#eb2f96',
