@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import {OverviewDashboardComponent} from "./pages/overview/overview-dashboard.component";
 import {ProfileComponent} from "./pages/profile/profile.component";
+import {AuthGuard} from "../../shared/guards/auth.guard";
 
 const routes: Routes = [
     {
         path: 'overview',
         component: DashboardComponent,
+        canActivate: [AuthGuard],
         data: {
             title: 'Dashboard ',
             headerDisplay: 'none'
@@ -16,6 +18,7 @@ const routes: Routes = [
     {
       path: 'home',
       component: OverviewDashboardComponent,
+      canActivate: [AuthGuard],
       data: {
         title: 'Overview',
         headerDisplay: 'none'
@@ -24,6 +27,7 @@ const routes: Routes = [
     {
       path: 'profile',
       component: ProfileComponent,
+      canActivate: [AuthGuard],
       data: {
         title: 'Profile',
         headerDisplay: 'none'

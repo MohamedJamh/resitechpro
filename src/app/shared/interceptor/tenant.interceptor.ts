@@ -14,7 +14,6 @@ import {TenantResolver} from "../utils/tenant.resolver";
 export class TenantInterceptor implements HttpInterceptor {
   constructor(private tenantService : TenantResolver) {}
   intercept( request: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
-    debugger
     if( ! request.url.includes('check-tenant')){
       let tenantId : string = '';
       if(request.url.includes('sign-in')) tenantId = this.tenantService.resolveFromEmail(request.body.email);

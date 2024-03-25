@@ -56,7 +56,7 @@ export class AuthService {
     localStorage.removeItem('_resuser');
     localStorage.removeItem('_resacctoken');
     localStorage.removeItem('_resreftoken');
-    this._router.navigate(['/authentication/login']).then(r => alert('You have been signed out'))
+    this._router.navigate(['/authentication/login'])
   }
   setCurrentUser(authUser: Auth): void {
     const signedInUser = authUser.user!;
@@ -70,17 +70,15 @@ export class AuthService {
   isLogged(): boolean {
     const user = localStorage.getItem('_resuser');
     const tenantId = localStorage.getItem('_tntid');
-    if( user && tenantId) {
-      try {
-        const decryptUser : User = JSON.parse(this.cryptoService.decrypt(user)) as User;
-        const decryptedTenantId : string = JSON.parse(this.cryptoService.decrypt(tenantId)) as string;
-        return true;
-      }catch (e) {
-        this.signOut();
-        return false;
-      }
+    if( !user || !tenantId ) return false;
+    try {
+      const decryptUser : User = JSON.parse(this.cryptoService.decrypt(user)) as User;
+      const decryptedTenantId : string = this.cryptoService.decrypt(tenantId) as string;
+      return true;
+    }catch (e) {
+      this.signOut();
+      return false;
     }
-    return false;
   }
 
   getAuthenticatedUser(): User {

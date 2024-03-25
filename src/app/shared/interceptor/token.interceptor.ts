@@ -24,7 +24,6 @@ export class JwtInterceptor implements HttpInterceptor {
   private countError : number = 0
   intercept( request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(request.url.includes('auth')) return next.handle(request)
-    debugger
     let accessToken : string | null = localStorage.getItem("_resacctoken");
     let refToken : string | null = localStorage.getItem("_resreftoken");
     let user : string | null = localStorage.getItem("_resuser");
@@ -57,11 +56,9 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-    debugger
     this.authService.refreshToken().subscribe((response: HttpResponse<Response<Auth>>) => {
       if([200].includes(response.status) && response.body?.result){
         this.countError = 0;
-        alert("Token refreshed")
         localStorage.setItem('_resacctoken', response.body?.result.accessToken!);
         this._router.navigate(['/dashboard/home']);
       }
