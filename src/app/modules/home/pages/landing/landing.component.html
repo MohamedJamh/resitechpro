@@ -65,9 +65,9 @@
             <div class="row">
               <div class="col-md-4">
                 <nz-form-item>
-                  <nz-form-label nzFor="city">City</nz-form-label>
+                  <nz-form-label nzFor="location">City</nz-form-label>
                   <nz-form-control nzErrorTip="Please input residence location!">
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="city">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="location">
                       <nz-option nzLabel="all" nzValue="all"></nz-option>
                       <nz-option *ngFor="let city of moroccanCities" [nzLabel]="city" [nzValue]="city"></nz-option>
                     </nz-select>
@@ -164,6 +164,11 @@
               </nz-skeleton>
             </nz-card>
           </div>
+          <ng-template #nodata>
+            <div class="text-center m-t-30">
+              <img src="assets/images/error/no-data.png" alt="no data">
+            </div>
+          </ng-template>
         </div>
       </section>
 
@@ -173,6 +178,18 @@
             <nz-divider style="font-size: x-large" nzText="Property Images"></nz-divider>
             <nz-carousel [nzEffect]="'scrollx'" nzAutoPlay>
               <div nz-carousel-content *ngFor="let image of propertyToShow.images">
+                <img class="img-fluid"
+                     [src]="image.url"
+                     [alt]="propertyToShow.label"
+                     style="height: 300px; object-fit: cover; width: 100%;"
+                >
+              </div>
+            </nz-carousel>
+          </div>
+          <div class="m-t-10">
+            <nz-divider style="font-size: x-large" nzText="Building & Residence Images"></nz-divider>
+            <nz-carousel [nzEffect]="'scrollx'" nzAutoPlay>
+              <div nz-carousel-content *ngFor="let image of propertyToShow.building.images.concat(propertyToShow.building.residence.images)">
                 <img class="img-fluid"
                      [src]="image.url"
                      [alt]="propertyToShow.label"

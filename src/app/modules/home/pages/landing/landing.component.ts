@@ -5,6 +5,7 @@ import {PropertyTypeEnum} from "../../../../shared/enums/property-type.enum";
 import {NzModalService} from "ng-zorro-antd/modal";
 import {Property} from "../../../../shared/models/iproerpty.model";
 import {Image} from "../../../../shared/models/iimage.model";
+import {ShowcaseService} from "../../../../shared/services/core/showcase.service";
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
@@ -74,7 +75,6 @@ export class LandingComponent implements OnInit {
     "Kenitra, Morocco",
     "Tetouan, Morocco"
   ];
-  searchEffected: boolean = false;
   searchFormGroup: FormGroup;
   properties : Property[] = [];
   loadingProperties: boolean = true;
@@ -83,16 +83,28 @@ export class LandingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private modalService: NzModalService
+    private modalService: NzModalService,
+    private showCaseService: ShowcaseService,
   ) { }
 
   ngOnInit(): void {
     this.searchFormGroup = this.fb.group({
-      city: ['all', [Validators.required]],
+      location: ['all', [Validators.required]],
       propertyType: ['all', [Validators.required]]
     })
+    this.fetchAllProperties();
+
   }
 
+  fetchAllProperties() {
+    this.showCaseService.getAllProperties().subscribe((response) => {
+        if( [200].includes(response.status) && response.body.result){
+          this.loadingProperties = false;
+          this.properties = response.body.result;
+        }
+      }
+    )
+  }
 
   searchForProperties() {
     for (const i in this.searchFormGroup.controls) {
@@ -101,9 +113,28 @@ export class LandingComponent implements OnInit {
     }
     if(this.searchFormGroup.invalid) return;
 
-    alert('Search for properties')
-    this.searchEffected = true;
+    let object = this.searchFormGroup.value;
+     if(object.location === 'all' && object.propertyType === 'all') this.fetchAllProperties();
+     if(object.location === 'all') {
+       this.showCaseService.searchProperties({propertyType: object.propertyType}).subscribe((response) => {
+         if ([200].includes(response.status) && response.body.result) {
+           this.loadingProperties = false;
+           this.properties = response.body.result;
+         }
+       })
+     }
+     if(object.propertyType === 'all'){
+        this.showCaseService.searchProperties({location: object.location}).subscribe((response) => {
+          if( [200].includes(response.status) && response.body.result){
+            this.loadingProperties = false;
+            this.properties = response.body.result;
+          }
+        })
+     }
+    console.log(this.properties)
   }
+
+
 
   getDefaultOrFirstImage(images: Image[],entity : string): string {
     if(images.length > 0) {
@@ -120,14 +151,17 @@ export class LandingComponent implements OnInit {
 
   expandModal(property: Property) {
     this.propertyToShow = property;
+    console.log(this.propertyToShow)
     this.isModalVisible = true;
   }
 
   handleCancel() {
-
+    this.isModalVisible = false;
+    this.propertyToShow = null;
   }
 
   handleOk() {
-
+    this.isModalVisible = false;
+    this.propertyToShow = null;
   }
 }

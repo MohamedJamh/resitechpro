@@ -7,6 +7,8 @@ import {Response} from "../../../../shared/models/response.model";
 import {AuthService} from "../../../../shared/services/core/auth.service";
 import {User} from "../../../../shared/models/iuser.model";
 import {Auth} from "../../../../shared/models/iauth.model";
+import {NzMessageService} from "ng-zorro-antd/message";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -21,7 +23,9 @@ export class SignUpComponent {
 
     constructor(
       private fb: FormBuilder,
-      private authService: AuthService
+      private authService: AuthService,
+      private message: NzMessageService,
+      private readonly router: Router
     ) {}
 
     ngOnInit(): void {
@@ -49,8 +53,9 @@ export class SignUpComponent {
           take(1)
         ).subscribe((response : HttpResponse<Response<Auth>>) => {
           if( [200].includes(response.status) && response.body?.result) {
-            alert("Sign up successful")
+            this.message.success('You have successfully signed up. You will be redirected to the dashboard shortly..');
             this.authService.setCurrentUser(response.body.result as Auth)
+            this.router.navigate(['/dashboard/home']);
           }
         }).add(() => this.signUpFormSubmitted = false);
     }

@@ -38,8 +38,8 @@ import {JwtInterceptor} from "./interceptor/token.interceptor";
   ],
     providers: [
         ThemeConstantService,
-      //{ provide : HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-      { provide : HTTP_INTERCEPTORS, useClass: TenantInterceptor, multi: true}
+      { provide : HTTP_INTERCEPTORS, useClass: TenantInterceptor, multi: true},
+      { provide : HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
     ]
 })
 

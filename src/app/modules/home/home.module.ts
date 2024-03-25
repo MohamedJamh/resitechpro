@@ -42,7 +42,6 @@ import {NzModalModule} from "ng-zorro-antd/modal";
     NzButtonModule,
     NzWaveModule,
     NzBreadCrumbModule,
-    AgmCoreModule,
     FormsModule,
     NzSelectModule,
     ReactiveFormsModule,
@@ -53,7 +52,11 @@ import {NzModalModule} from "ng-zorro-antd/modal";
     NzSkeletonModule,
     NzTabsModule,
     NzTagModule,
-    NzModalModule
+    NzModalModule,
+
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDE__waFjQfC717CkdxkeclbVfjt0omgxg'
+    })
   ]
 })
 export class HomeModule { }

@@ -45,7 +45,7 @@ export class AuthService {
   refreshToken(): Observable<HttpResponse<Response<Auth>>> {
     return this.httpClient.post<Response<Auth>>(this.envService.apiUrl + this.endpointPrefix + '/refresh-token',
 {
-      refreshToken: localStorage.getItem('aftasreftoken')
+      refreshToken: localStorage.getItem('_resreftoken')
     },
 {observe: 'response'}
     );
