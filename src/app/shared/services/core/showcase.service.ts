@@ -22,7 +22,7 @@ export class ShowcaseService{
   }
 
   getAllPartners(){
-    return this.httpClient.get<Response<User[]>>(this.envService.apiUrl + this.endpointPrefix + 'users' , {observe: 'response'});
+    return this.httpClient.get<Response<User[]>>(this.envService.apiUrl + this.endpointPrefix + '/' + 'users' , {observe: 'response'});
   }
 
   searchProperties(searchPaylod: object){

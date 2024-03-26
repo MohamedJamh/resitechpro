@@ -92,4 +92,12 @@ export class AuthService {
     }else this.signOut();
   }
 
+  isLoggedIn() : boolean {
+    let tenant = localStorage.getItem('_tntid')
+    let user = localStorage.getItem('_resuser')
+    let acc = localStorage.getItem('_resacctoken')
+    let ref = localStorage.getItem('_resreftoken')
+    return !!(tenant && user && acc && ref);
+  }
+
 }

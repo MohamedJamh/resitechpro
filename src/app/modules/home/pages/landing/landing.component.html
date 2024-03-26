@@ -6,7 +6,10 @@
     <ul class="m-l-40" nz-menu nzTheme="dark" nzMode="horizontal">
       <li nz-menu-item>Home</li>
       <li nz-menu-item>Pricing</li>
-      <li nz-menu-item>Contact us</li>
+      <li *ngIf=" this.authService.isLoggedIn() else login" routerLink="/dashboard/home" nz-menu-item>Dashboard</li>
+      <ng-template #login>
+        <li  routerLink="/authentication/login" nz-menu-item>Login</li>
+      </ng-template>
     </ul>
   </nz-header>
   <nz-content>
@@ -25,12 +28,17 @@
             <p class="w-45 m-h-auto m-b-30">People who are using our saas platform to mange there properties and residences.</p>
 
             <div class="row" >
-              <div class="col-md-3" *ngFor="let item of memberList">
+              <div class="col-md-4" *ngFor="let partner of partnersList">
                 <nz-card>
                   <div class="m-t-20 text-center">
-                    <nz-avatar class="shadow" [nzSize]="100" nzIcon="user" [nzSrc]="item.img"></nz-avatar>
-                    <h4 class="m-t-30">{{item.name}}</h4>
-                    <p>{{item.mail}}</p>
+                    <nz-avatar class="shadow" [nzSize]="100" nzIcon="user" [nzSrc]="getRandomUserPicture()"></nz-avatar>
+                    <h4 class="m-t-30">{{partner.firstName}} {{partner.lastName}}</h4>
+                    <p>{{partner.personalEmail}}</p>
+                  </div>
+                  <div class="m-t-10">
+                    <nz-tag [nzColor]="'orange'">
+                      <span class="text-uppercase font-weight-bold">{{partner.organizationName}}</span>
+                    </nz-tag>
                   </div>
                   <div class="text-center m-t-15">
                     <button class="m-r-10" nz-button nzType="default" nzShape="circle"><i nz-icon nzType="facebook"></i></button>

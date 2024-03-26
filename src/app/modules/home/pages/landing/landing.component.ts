@@ -6,6 +6,8 @@ import {NzModalService} from "ng-zorro-antd/modal";
 import {Property} from "../../../../shared/models/iproerpty.model";
 import {Image} from "../../../../shared/models/iimage.model";
 import {ShowcaseService} from "../../../../shared/services/core/showcase.service";
+import {User} from "../../../../shared/models/iuser.model";
+import {AuthService} from "../../../../shared/services/core/auth.service";
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
@@ -14,28 +16,7 @@ styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
   dotPosition: string = 'right';
-  memberList = [
-    {
-      name: 'Erin Gonzales',
-      img: 'assets/images/avatars/thumb-2.jpg',
-      mail: 'erin.gon@gmail.com'
-    },
-    {
-      name: 'Darryl Day',
-      img: 'assets/images/avatars/thumb-3.jpg',
-      mail: 'darryl.d@gmail.com'
-    },
-    {
-      name: 'Marshall Nichols',
-      img: 'assets/images/avatars/thumb-1.jpg',
-      mail: 'marshalln@gmail.com'
-    },
-    {
-      name: 'Virgil Gonzales',
-      img: 'assets/images/avatars/thumb-4.jpg',
-      mail: 'virgil14@gmail.com'
-    }
-  ]
+  partnersList : User[] = []
   brandList = [
     {
       img: 'assets/images/brand/brand-logo1.png'
@@ -80,11 +61,18 @@ export class LandingComponent implements OnInit {
   loadingProperties: boolean = true;
   propertyToShow: Property;
   isModalVisible: boolean;
+  userPictures: string[] = [
+    '../../../../../assets/images/avatars/thumb-1.jpg',
+    '../../../../../assets/images/avatars/thumb-2.jpg',
+    '../../../../../assets/images/avatars/thumb-3.jpg',
+    '../../../../../assets/images/avatars/thumb-4.jpg',
+  ]
 
   constructor(
     private fb: FormBuilder,
     private modalService: NzModalService,
     private showCaseService: ShowcaseService,
+    public authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -93,6 +81,7 @@ export class LandingComponent implements OnInit {
       propertyType: ['all', [Validators.required]]
     })
     this.fetchAllProperties();
+    this.fetchAllPartners();
 
   }
 
@@ -106,6 +95,15 @@ export class LandingComponent implements OnInit {
     )
   }
 
+  fetchAllPartners() {
+    this.showCaseService.getAllPartners().subscribe((response) => {
+        if( [200].includes(response.status) && response.body.result){
+          this.partnersList = response.body.result;
+        }
+      }
+    )
+  }
+
   searchForProperties() {
     for (const i in this.searchFormGroup.controls) {
       this.searchFormGroup.controls[ i ].markAsDirty();
@@ -114,8 +112,16 @@ export class LandingComponent implements OnInit {
     if(this.searchFormGroup.invalid) return;
 
     let object = this.searchFormGroup.value;
-     if(object.location === 'all' && object.propertyType === 'all') this.fetchAllProperties();
-     if(object.location === 'all') {
+    if(object.location === 'all' && object.propertyType === 'all') this.fetchAllProperties();
+    else if(object.location != 'all' && object.propertyType != 'all') {
+      this.showCaseService.searchProperties({location: object.location, propertyType: object.propertyType}).subscribe((response) => {
+        if ([200].includes(response.status) && response.body.result) {
+          this.loadingProperties = false;
+          this.properties = response.body.result;
+        }
+      })
+    }
+    else if(object.propertyType !== 'all') {
        this.showCaseService.searchProperties({propertyType: object.propertyType}).subscribe((response) => {
          if ([200].includes(response.status) && response.body.result) {
            this.loadingProperties = false;
@@ -123,7 +129,7 @@ export class LandingComponent implements OnInit {
          }
        })
      }
-     if(object.propertyType === 'all'){
+     else if(object.location !== 'all'){
         this.showCaseService.searchProperties({location: object.location}).subscribe((response) => {
           if( [200].includes(response.status) && response.body.result){
             this.loadingProperties = false;
@@ -131,7 +137,6 @@ export class LandingComponent implements OnInit {
           }
         })
      }
-    console.log(this.properties)
   }
 
 
@@ -163,5 +168,9 @@ export class LandingComponent implements OnInit {
   handleOk() {
     this.isModalVisible = false;
     this.propertyToShow = null;
+  }
+
+  getRandomUserPicture() : string {
+    return '../../../../../assets/images/avatars/thumb-4.jpg';
   }
 }

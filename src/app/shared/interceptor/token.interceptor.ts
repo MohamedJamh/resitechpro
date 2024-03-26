@@ -23,7 +23,7 @@ export class JwtInterceptor implements HttpInterceptor {
   ) {}
   private countError : number = 0
   intercept( request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if(request.url.includes('auth')) return next.handle(request)
+    if( ! this.authService.isLogged() || request.url.includes('auth')) return next.handle(request)
     let accessToken : string | null = localStorage.getItem("_resacctoken");
     let refToken : string | null = localStorage.getItem("_resreftoken");
     let user : string | null = localStorage.getItem("_resuser");
