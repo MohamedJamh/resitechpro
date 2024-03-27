@@ -156,7 +156,7 @@ export class LandingComponent implements OnInit {
 
   expandModal(property: Property) {
     this.propertyToShow = property;
-    console.log(this.propertyToShow)
+    this.showCaseService.submitViewOnProperty(property.id).subscribe((response) => {})
     this.isModalVisible = true;
   }
 

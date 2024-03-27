@@ -1,54 +1,8 @@
 <div class="row">
-    <div class="col-md-6 col-lg-3">
-        <nz-card>
-            <div class="media align-items-center">
-                <nz-avatar [nzSize]="60" nzIcon="dollar" class="ant-avatar-blue"  ></nz-avatar>
-                <div class="m-l-15">
-                    <h2 class="m-b-0">$23,523</h2>
-                    <p class="m-b-0 text-muted">Profit</p>
-                </div>
-            </div>
-        </nz-card>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <nz-card>
-            <div class="media align-items-center">
-                <nz-avatar [nzSize]="50" nzIcon="line-chart" class="ant-avatar-cyan"  ></nz-avatar>
-                <div class="m-l-15">
-                    <h2 class="m-b-0">+ 17.21%</h2>
-                    <p class="m-b-0 text-muted">Growth</p>
-                </div>
-            </div>
-        </nz-card>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <nz-card>
-            <div class="media align-items-center">
-                <nz-avatar [nzSize]="50" nzIcon="profile" class="ant-avatar-gold"  ></nz-avatar>
-                <div class="m-l-15">
-                    <h2 class="m-b-0">3,685</h2>
-                    <p class="m-b-0 text-muted">Orders</p>
-                </div>
-            </div>
-        </nz-card>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <nz-card>
-            <div class="media align-items-center">
-                <nz-avatar [nzSize]="50" nzIcon="user" class="ant-avatar-purple"  ></nz-avatar>
-                <div class="m-l-15">
-                    <h2 class="m-b-0">1,832</h2>
-                    <p class="m-b-0 text-muted">Customers</p>
-                </div>
-            </div>
-        </nz-card>
-    </div>
-</div>
-<div class="row">
   <div class="col-md-12 col-lg-8">
     <nz-card>
       <div class="d-flex justify-content-between align-items-center">
-        <h5>Total Revenue</h5>
+        <h5>Property views</h5>
         <div>
           <nz-radio-group [(ngModel)]="revenueChartFormat">
             <label nz-radio-button nzValue="revenueMonth">Month</label>
@@ -58,12 +12,12 @@
       </div>
       <div class="m-t-50" style="height: 330px">
         <canvas ngChartjs
-                [datasets]="revenueChartData"
-                [labels]="revenueChartLabels"
-                [options]="revenueChartOptions"
-                [colors]="revenueChartColors"
+                [datasets]="viewChartData"
+                [labels]="viewChartLabels"
+                [options]="viewChartOptions"
+                [colors]="viewChartColors"
                 [legend]="false"
-                [chartType]="revenueChartType">
+                [chartType]="viewChartType">
         </canvas>
       </div>
     </nz-card>
@@ -73,8 +27,8 @@
       <h5 class="m-b-0">Customers</h5>
       <div class="m-v-60 text-center" style="height: 200px">
         <canvas ngChartjs
-                [data]="customersChartData"
-                [labels]="customersChartLabels"
+                [data]="propertiesChartData"
+                [labels]="propertiesChartLabels"
                 [chartType]="customersChartType"
                 [colors]="customersChartColors"
                 [options]="customersChartOptions"
@@ -87,8 +41,8 @@
             <div class="media align-items-center">
               <nz-badge nzStatus="default" [nzColor]="cyan"></nz-badge>
               <div class="m-l-5">
-                <h4 class="m-b-0">350</h4>
-                <p class="m-b-0 muted">New</p>
+                <h4 class="m-b-0">{{propertiesChartData[0]}}</h4>
+                <p class="m-b-0 muted">Residences</p>
               </div>
             </div>
           </div>
@@ -98,8 +52,8 @@
             <div class="media align-items-center">
               <nz-badge nzStatus="default" [nzColor]="purple"></nz-badge>
               <div class="m-l-5">
-                <h4 class="m-b-0">450</h4>
-                <p class="m-b-0 muted">Returning</p>
+                <h4 class="m-b-0">{{propertiesChartData[1]}}</h4>
+                <p class="m-b-0 muted">Buildings</p>
               </div>
             </div>
           </div>
@@ -109,8 +63,8 @@
             <div class="media align-items-center">
               <nz-badge nzStatus="default" [nzColor]="gold"></nz-badge>
               <div class="m-l-5">
-                <h4 class="m-b-0">100</h4>
-                <p class="m-b-0 muted">Others</p>
+                <h4 class="m-b-0">{{propertiesChartData[2]}}</h4>
+                <p class="m-b-0 muted">properties</p>
               </div>
             </div>
           </div>
