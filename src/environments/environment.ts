@@ -9,7 +9,7 @@ export const environment = {
     "URt0FFF9foFtY/OvsH9CAzb+/lnj4aFoT0FLEzMkpBwmFcMbT2LhZ48mPxEPK0qR\n" +
     "zJa9Z9WX+Wm7i5EtKwuI5mQ2l318sS93qP4IhGVLGkTFw+vO8n+n9rXtk9GDOpGh\n" +
     "kaLpc8XJtd/mRUtFAgMBAAE="
-};
+  };
 
 /*
  * For easier debugging in development mode, you can import the following file
